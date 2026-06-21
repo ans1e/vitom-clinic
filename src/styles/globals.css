@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+/* ============================================================
+   VITOM CLINIC — design tokens (Tailwind v4 @theme)
+   ============================================================ */
+@theme {
+  --color-cream: #faf8f4;
+  --color-paper: #f4f1eb;
+  --color-ink: #0e0e0e;
+  --color-smoke: #6e6a63;
+  --color-line: #e4dfd6;
+  --color-blue: #c7d8e2;
+  --color-pink: #e9c9d7;
+  --color-sage: #cfdec9;
+
+  --font-sans: "Geologica", Arial, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+  /* `clip` prevents accidental horizontal scroll without creating a scroll
+     container, so the sticky header keeps working. */
+  overflow-x: clip;
+}
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* ============================================================
+   Type treatments
+   ============================================================ */
+.wordmark {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+.display {
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+}
+/* Fluid footer wordmark: scales with the viewport but caps so it never
+   overflows the 1280px content container. */
+.footer-wordmark {
+  /* Override .wordmark's wide 0.16em tracking so the lockup fits the container
+     and stays centered instead of clipping on the right. */
+  letter-spacing: -0.01em;
+  font-size: clamp(2rem, 11vw, 132px);
+  line-height: 0.9;
+}
+
+/* ============================================================
+   Gradients & texture
+   ============================================================ */
+.grad-blue {
+  background: radial-gradient(125% 115% at 50% 42%, #a9cbe2 0%, #d2e5f0 38%, #ffffff 72%);
+}
+.grad-green {
+  background: radial-gradient(125% 115% at 50% 42%, #a9d0a2 0%, #d6e9d0 38%, #ffffff 72%);
+}
+.grad-pink {
+  background: radial-gradient(125% 115% at 50% 42%, #e2a6c2 0%, #f1d6e3 38%, #ffffff 72%);
+}
+.hero-grad {
+  background:
+    radial-gradient(120% 90% at 18% 0%, #e7eef2 0%, rgba(231, 238, 242, 0) 55%),
+    radial-gradient(130% 100% at 88% 18%, #f0e2e8 0%, rgba(240, 226, 232, 0) 50%),
+    radial-gradient(120% 120% at 50% 100%, #f3f4f0 0%, rgba(243, 244, 240, 0) 60%),
+    linear-gradient(180deg, #edf1f2 0%, #faf8f4 100%);
+}
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-ink);
+  color: #fff;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.35s,
+    box-shadow 0.35s;
+}
+.btn-dark:hover {
+  background: #262320;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -12px rgba(14, 14, 14, 0.5);
+}
+.btn-dark:active {
+  transform: translateY(0);
+}
+.btn-out {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-ink);
+  color: var(--color-ink);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.35s,
+    color 0.35s,
+    transform 0.35s;
+}
+.btn-out:hover {
+  background: var(--color-ink);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   Nav underline link
+   ============================================================ */
+.navlink {
+  position: relative;
+  transition: color 0.3s;
+}
+.navlink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 1px;
+  width: 0;
+  background: var(--color-ink);
+  transition: width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.navlink:hover::after,
+.navlink:focus-visible::after {
+  width: 100%;
+}
+
+/* ============================================================
+   Product cards
+   ============================================================ */
+.card {
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.card:hover {
+  transform: translateY(-6px);
+}
+.card:hover .card-img {
+  transform: scale(1.04);
+}
+.card-img {
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.float-img {
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.float-img:hover {
+  transform: translateY(-8px) rotate(-1deg);
+}
+
+/* ============================================================
+   Catalog carousel
+   ============================================================ */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.carousel-btn {
+  position: absolute;
+  top: 34%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  background: rgba(250, 248, 244, 0.82);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--color-line);
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 26px -14px rgba(14, 14, 14, 0.45);
+  opacity: 0;
+  transition:
+    opacity 0.3s,
+    background-color 0.3s,
+    color 0.3s,
+    box-shadow 0.3s;
+}
+.catalog-carousel:hover .carousel-btn,
+.carousel-btn:focus-visible {
+  opacity: 1;
+}
+.carousel-btn:hover {
+  background: var(--color-ink);
+  color: #fff;
+  box-shadow: 0 16px 30px -12px rgba(14, 14, 14, 0.55);
+}
+.carousel-btn:disabled {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+@media (max-width: 767px) {
+  .catalog-carousel .carousel-btn {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Scroll reveal
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============================================================
+   A11y / focus / reduced motion
+   ============================================================ */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
