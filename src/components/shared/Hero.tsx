@@ -25,17 +25,16 @@ export function Hero(): React.JSX.Element {
         sizes="100vw"
         className="object-cover -z-10 hidden md:block"
       />
-      {/* Legibility scrims: top-down on mobile, left-to-right on desktop */}
-      <div className="absolute inset-0 -z-10 md:hidden bg-gradient-to-b from-cream via-cream/60 to-transparent" />
+      {/* Legibility scrims: ground the buttons on mobile, lighten the text side on desktop */}
+      <div className="absolute inset-0 -z-10 md:hidden bg-gradient-to-t from-cream/90 via-cream/15 to-transparent" />
       <div className="absolute inset-0 -z-10 hidden md:block bg-gradient-to-r from-cream/85 via-cream/35 to-transparent" />
 
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-6 lg:px-10 flex flex-col justify-start md:justify-center pt-12 md:pt-0 pb-16">
-        <Reveal className="max-w-[460px]">
-          <p className="eyebrow text-[11px] text-smoke mb-6">Marine collagen · wellness</p>
-          <h1 className="display text-[42px] sm:text-[56px] lg:text-[64px] text-ink mb-6">
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-6 lg:px-10 flex flex-col justify-end md:justify-center pt-12 md:pt-0 pb-10 md:pb-16">
+        <Reveal className="max-w-[460px] w-full">
+          <h1 className="hidden md:block display text-[42px] sm:text-[56px] lg:text-[64px] text-ink mb-6">
             Морской коллаген для&nbsp;ежедневного ритуала
           </h1>
-          <p className="text-[16px] leading-[1.7] text-ink/75 max-w-[420px] mb-9">
+          <p className="hidden md:block text-[16px] leading-[1.7] text-ink/75 max-w-[420px] mb-9">
             Два формата приёма, чистый состав и понятные курсы. Откройте свежесть
             и эффективность в каждой порции VITOM.
           </p>
