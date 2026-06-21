@@ -35,7 +35,7 @@ export function ProductShowcase({ products }: { products: Product[] }): React.JS
     >
       <Carousel
         setApi={setApi}
-        opts={{ loop: true, align: "start", dragFree: false }}
+        opts={{ loop: true, align: "center", dragFree: false }}
         plugins={[WheelGesturesPlugin()]}
         className="w-full"
       >

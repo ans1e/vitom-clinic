@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { Search, ShoppingBag, User } from "lucide-react";
+import { Menu, Search, ShoppingBag, User } from "lucide-react";
 
 import { useCartStore } from "@/store/cart";
+import { MobileNav } from "@/components/layout/MobileNav";
 
 const NAV = [
   { label: "О бренде", href: "/about" },
@@ -16,10 +18,12 @@ const NAV = [
 
 export function Header(): React.JSX.Element {
   const count = useCartStore((state) => state.items.reduce((n, i) => n + i.quantity, 0));
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-cream/85 backdrop-blur-md border-b border-line">
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
+    <>
+      <header className="sticky top-0 z-50 bg-cream/85 backdrop-blur-md border-b border-line">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
         <div className="relative flex items-center justify-between md:justify-center h-[78px]">
           <Link
             href="/"
@@ -28,7 +32,7 @@ export function Header(): React.JSX.Element {
             VITOM&nbsp;CLINIC
           </Link>
           <div className="flex items-center gap-4 sm:gap-5 text-ink md:absolute md:right-0">
-            <button type="button" aria-label="Поиск" className="hover:opacity-60 transition-opacity">
+            <button type="button" aria-label="Поиск" className="hidden md:inline-flex hover:opacity-60 transition-opacity">
               <Search className="w-[22px] h-[22px]" strokeWidth={1.5} />
             </button>
             <Link href="/catalog" aria-label="Корзина" className="relative hover:opacity-60 transition-opacity">
@@ -37,8 +41,17 @@ export function Header(): React.JSX.Element {
                 {count}
               </span>
             </Link>
-            <button type="button" aria-label="Аккаунт" className="hover:opacity-60 transition-opacity">
+            <button type="button" aria-label="Аккаунт" className="hidden md:inline-flex hover:opacity-60 transition-opacity">
               <User className="w-[22px] h-[22px]" strokeWidth={1.5} />
+            </button>
+            <button
+              type="button"
+              aria-label="Меню"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen(true)}
+              className="md:hidden hover:opacity-60 transition-opacity"
+            >
+              <Menu className="w-[24px] h-[24px]" strokeWidth={1.5} />
             </button>
           </div>
         </div>
@@ -49,7 +62,10 @@ export function Header(): React.JSX.Element {
             </Link>
           ))}
         </nav>
-      </div>
-    </header>
+        </div>
+      </header>
+
+      <MobileNav open={menuOpen} onClose={() => setMenuOpen(false)} items={NAV} />
+    </>
   );
 }
