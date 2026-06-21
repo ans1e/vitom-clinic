@@ -87,8 +87,6 @@ export function MobileNav({ open, onClose, items }: MobileNavProps): React.JSX.E
             </Link>
           ))}
         </nav>
-
-        <p className="eyebrow text-[10px] text-smoke text-center pb-10">Marine collagen · wellness</p>
       </div>
     </div>
   );

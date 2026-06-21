@@ -9,6 +9,13 @@ import { cn } from "@/lib/utils";
 export async function CatalogSection(): Promise<React.JSX.Element> {
   const products = await getProducts();
 
+  // Lead the carousel with the hit shots. Keeping one shot at the end means the
+  // looping carousel's left-neighbour of the centered first hit is a shot too,
+  // so the row opens on VITOSHOTS rather than on jelly.
+  const shots = products.filter((p) => p.format === "shots");
+  const jelly = products.filter((p) => p.format === "jelly");
+  const showcase = [...shots.slice(0, -1), ...jelly, ...shots.slice(-1)];
+
   return (
     <section id="catalog" className="bg-cream">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-20 lg:py-28">
@@ -22,7 +29,7 @@ export async function CatalogSection(): Promise<React.JSX.Element> {
         </Reveal>
 
         <Reveal>
-          <ProductShowcase products={products} />
+          <ProductShowcase products={showcase} />
         </Reveal>
 
         <Reveal className="text-center mt-16">
