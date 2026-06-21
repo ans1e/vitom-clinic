@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -21,6 +21,7 @@ interface ProductCardProps {
 export function ProductCard({ product, variant = "grid", priority = false }: ProductCardProps): React.JSX.Element {
   const href = `/catalog/${product.slug}`;
   const [modalOpen, setModalOpen] = useState(false);
+  const closeModal = useCallback(() => setModalOpen(false), []);
 
   return (
     <motion.article
@@ -63,7 +64,7 @@ export function ProductCard({ product, variant = "grid", priority = false }: Pro
         </Button>
       </div>
 
-      <ProductModal product={product} open={modalOpen} onClose={() => setModalOpen(false)} />
+      <ProductModal product={product} open={modalOpen} onClose={closeModal} />
     </motion.article>
   );
 }

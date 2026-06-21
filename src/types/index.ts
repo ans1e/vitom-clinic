@@ -20,5 +20,9 @@ export interface Product {
   gradient: ProductGradient;
   /** Image width inside the card frame, e.g. "w-[78%]". */
   imageWidthClass: string;
+  /** Larger jar shown for higher volume variants (jelly only). */
+  bigImage?: string;
+  bigImageWidth?: number;
+  bigImageHeight?: number;
   badge?: ProductBadge;
 }

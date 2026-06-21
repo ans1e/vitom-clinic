@@ -70,6 +70,9 @@ export const PRODUCTS: Product[] = [
     imageHeight: 1350,
     gradient: "grad-blue",
     imageWidthClass: "w-[64%]",
+    bigImage: "/assets/jelly-blue-xl.webp",
+    bigImageWidth: 1000,
+    bigImageHeight: 1250,
   },
   {
     id: "jelly-apple",
@@ -86,6 +89,9 @@ export const PRODUCTS: Product[] = [
     imageHeight: 1350,
     gradient: "grad-green",
     imageWidthClass: "w-[64%]",
+    bigImage: "/assets/jelly-green-xl.webp",
+    bigImageWidth: 1000,
+    bigImageHeight: 1250,
   },
   {
     id: "jelly-cherry",
@@ -102,5 +108,8 @@ export const PRODUCTS: Product[] = [
     imageHeight: 1350,
     gradient: "grad-pink",
     imageWidthClass: "w-[64%]",
+    bigImage: "/assets/jelly-pink-xl.webp",
+    bigImageWidth: 1000,
+    bigImageHeight: 1250,
   },
 ];
