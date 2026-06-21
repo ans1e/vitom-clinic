@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
 
+import { useScrollLock } from "@/hooks/useScrollLock";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -18,36 +19,15 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ open, onClose, items }: MobileNavProps): React.JSX.Element {
+  useScrollLock(open);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent): void => {
       if (event.key === "Escape") onClose();
     };
     document.addEventListener("keydown", onKey);
-
-    // Lock background scroll. `overflow:hidden` alone is unreliable on iOS, so
-    // pin the body with position:fixed and restore the scroll position on close.
-    const body = document.body;
-    const scrollY = window.scrollY;
-    const previous = {
-      position: body.style.position,
-      top: body.style.top,
-      width: body.style.width,
-      overflow: body.style.overflow,
-    };
-    body.style.position = "fixed";
-    body.style.top = `-${scrollY}px`;
-    body.style.width = "100%";
-    body.style.overflow = "hidden";
-
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      body.style.position = previous.position;
-      body.style.top = previous.top;
-      body.style.width = previous.width;
-      body.style.overflow = previous.overflow;
-      window.scrollTo(0, scrollY);
-    };
+    return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
   return (

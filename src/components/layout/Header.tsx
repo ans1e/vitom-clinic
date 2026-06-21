@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, Search, ShoppingBag, User } from "lucide-react";
 
 import { useCartStore } from "@/store/cart";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { CartDrawer } from "@/components/layout/CartDrawer";
+import { AccountPopup } from "@/components/layout/AccountPopup";
 
 const NAV = [
   { label: "О бренде", href: "/about" },
@@ -19,6 +21,12 @@ const NAV = [
 export function Header(): React.JSX.Element {
   const count = useCartStore((state) => state.items.reduce((n, i) => n + i.quantity, 0));
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  // Cart is persisted to localStorage; render the count only after mount to
+  // avoid a server/client hydration mismatch.
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
 
   return (
     <>
@@ -35,13 +43,25 @@ export function Header(): React.JSX.Element {
             <button type="button" aria-label="Поиск" className="hidden md:inline-flex hover:opacity-60 transition-opacity">
               <Search className="w-[22px] h-[22px]" strokeWidth={1.5} />
             </button>
-            <Link href="/catalog" aria-label="Корзина" className="relative hover:opacity-60 transition-opacity">
+            <button
+              type="button"
+              aria-label="Корзина"
+              onClick={() => setCartOpen(true)}
+              className="relative hover:opacity-60 transition-opacity"
+            >
               <ShoppingBag className="w-[22px] h-[22px]" strokeWidth={1.5} />
-              <span className="absolute -top-2 -right-2 bg-ink text-white text-[10px] font-semibold w-[18px] h-[18px] rounded-full flex items-center justify-center">
-                {count}
-              </span>
-            </Link>
-            <button type="button" aria-label="Аккаунт" className="hidden md:inline-flex hover:opacity-60 transition-opacity">
+              {hydrated && count > 0 && (
+                <span className="absolute -top-2 -right-2 bg-ink text-white text-[10px] font-semibold w-[18px] h-[18px] rounded-full flex items-center justify-center">
+                  {count}
+                </span>
+              )}
+            </button>
+            <button
+              type="button"
+              aria-label="Аккаунт"
+              onClick={() => setAccountOpen(true)}
+              className="hidden md:inline-flex hover:opacity-60 transition-opacity"
+            >
               <User className="w-[22px] h-[22px]" strokeWidth={1.5} />
             </button>
             <button
@@ -66,6 +86,8 @@ export function Header(): React.JSX.Element {
       </header>
 
       <MobileNav open={menuOpen} onClose={() => setMenuOpen(false)} items={NAV} />
+      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+      <AccountPopup open={accountOpen} onClose={() => setAccountOpen(false)} />
     </>
   );
 }
