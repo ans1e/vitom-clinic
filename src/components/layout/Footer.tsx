@@ -79,7 +79,7 @@ export function Footer(): React.JSX.Element {
           <p className="text-[14px] text-white/55 order-1">© 2026 VITOM CLINIC</p>
           <p className="text-[12px] text-white/35 order-3 sm:order-2">
             Сайт разработан командой{" "}
-            <span className="wordmark tracking-[0.1em] text-white/55">ALTA SERVICE</span>
+            <span className="font-montserrat font-semibold tracking-[0.1em] text-white/55">ALTA</span>
           </p>
           <a href="#" className="text-[14px] text-white/55 hover:text-white transition-colors order-2 sm:order-3">
             Политика конфиденциальности

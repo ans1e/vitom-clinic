@@ -29,3 +29,12 @@ next-env.d.ts
 
 # mcp servers
 /.vscode
+
+# graphify
+/graphify-out
+
+# python
+/.venv
+
+# claude 
+/.claude
