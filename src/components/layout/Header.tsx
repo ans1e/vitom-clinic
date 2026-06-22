@@ -8,6 +8,7 @@ import { useCartStore } from "@/store/cart";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { AccountPopup } from "@/components/layout/AccountPopup";
+import { MenuHoverLink } from "@/components/ui/menu-hover-effects";
 
 const NAV = [
   { label: "О бренде", href: "/about" },
@@ -75,11 +76,11 @@ export function Header(): React.JSX.Element {
             </button>
           </div>
         </div>
-        <nav className="hidden md:flex items-center justify-center gap-9 lg:gap-12 pb-4 -mt-1 text-[14px] text-smoke">
+        <nav className="hidden md:flex items-center justify-center gap-5 lg:gap-7 pb-3 -mt-1 text-[14px]">
           {NAV.map((item) => (
-            <Link key={item.label} href={item.href} className="navlink">
+            <MenuHoverLink key={item.label} href={item.href}>
               {item.label}
-            </Link>
+            </MenuHoverLink>
           ))}
         </nav>
         </div>
