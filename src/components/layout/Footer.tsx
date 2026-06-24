@@ -15,21 +15,21 @@ const NAV = [
 const SOCIALS = [
   {
     label: "Instagram",
-    href: "#",
+    href: "https://www.instagram.com/vitom.clinic/",
     img: "/assets/instagram-logo-colored.jpg",
     wrap: "",
     img_cn: "object-cover",
   },
   {
     label: "Telegram",
-    href: "#",
+    href: "https://t.me/vitom_uz",
     img: "/assets/telegram-6896827_1280.png",
     wrap: "bg-[#29A9EB] flex items-center justify-center",
     img_cn: "object-cover scale-[1.18]",
   },
   {
     label: "Uzum Market",
-    href: "#",
+    href: "https://uzum.uz/shop/vitomclinic",
     img: "/assets/uzum_logo.png",
     wrap: "bg-[#FFE000] flex items-center justify-center",
     img_cn: "object-cover object-center scale-[1.18]",
@@ -57,6 +57,8 @@ export function Footer(): React.JSX.Element {
               <a
                 key={social.label}
                 href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={social.label}
                 className={cn(
                   "w-12 h-12 rounded-2xl overflow-hidden transition-transform duration-300 hover:-translate-y-1",

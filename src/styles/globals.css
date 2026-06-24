@@ -24,8 +24,10 @@
 html {
   scroll-behavior: smooth;
   /* `clip` prevents accidental horizontal scroll without creating a scroll
-     container, so the sticky header keeps working. */
+     container. */
   overflow-x: clip;
+  /* Offset in-page anchor jumps for the fixed header. */
+  scroll-padding-top: var(--header-h, 79px);
 }
 body {
   background: var(--color-cream);
@@ -229,6 +231,23 @@ body {
   .catalog-carousel .carousel-btn {
     display: none;
   }
+}
+
+/* ============================================================
+   Modal panel entrance (backdrop stays instant)
+   ============================================================ */
+@keyframes modal-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.modal-pop {
+  animation: modal-pop 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* ============================================================

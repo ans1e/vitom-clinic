@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Menu, Search, ShoppingBag, User } from "lucide-react";
 
@@ -29,9 +29,23 @@ export function Header(): React.JSX.Element {
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => setHydrated(true), []);
 
+  // Publish the live header height as --header-h so content can offset for the
+  // fixed header at any breakpoint (the nav row wraps on some widths).
+  const headerRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const setVar = (): void =>
+      document.documentElement.style.setProperty("--header-h", `${el.offsetHeight}px`);
+    setVar();
+    const ro = new ResizeObserver(setVar);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   return (
     <>
-      <header className="sticky top-0 z-50 bg-cream/85 backdrop-blur-md border-b border-line">
+      <header ref={headerRef} className="fixed top-0 inset-x-0 z-50 bg-cream/85 backdrop-blur-md border-b border-line">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
         <div className="relative flex items-center justify-between md:justify-center h-[78px]">
           <Link

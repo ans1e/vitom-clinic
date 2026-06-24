@@ -43,7 +43,7 @@ export default function RootLayout({ children }: { children: ReactNode }): React
             К основному содержимому
           </a>
           <Header />
-          <main id="main">{children}</main>
+          <main id="main" className="pt-[var(--header-h,79px)]">{children}</main>
           <Footer />
         </Providers>
       </body>

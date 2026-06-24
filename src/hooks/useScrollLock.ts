@@ -4,8 +4,8 @@ import { useEffect, useRef } from "react";
 
 /**
  * Locks background scrolling while `active` (iOS-safe position:fixed technique)
- * and restores the exact scroll position on release — without any smooth-scroll
- * animation, so closing an overlay never visibly moves the page.
+ * and restores the exact scroll position instantly on release. The site header
+ * is `position:fixed`, so it stays put and visible while this is engaged.
  */
 export function useScrollLock(active: boolean): void {
   const scrollYRef = useRef(0);

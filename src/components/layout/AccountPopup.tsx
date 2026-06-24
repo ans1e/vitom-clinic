@@ -1,18 +1,21 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
 import { useScrollLock } from "@/hooks/useScrollLock";
-import { cn } from "@/lib/utils";
 
 interface AccountPopupProps {
   open: boolean;
   onClose: () => void;
 }
 
-export function AccountPopup({ open, onClose }: AccountPopupProps): React.JSX.Element {
+export function AccountPopup({ open, onClose }: AccountPopupProps): React.JSX.Element | null {
+  const [mounted, setMounted] = useState(false);
+
   useScrollLock(open);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (!open) return;
@@ -23,32 +26,23 @@ export function AccountPopup({ open, onClose }: AccountPopupProps): React.JSX.El
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  return (
+  if (!mounted || !open) return null;
+
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
       aria-label="Личный кабинет"
-      className={cn(
-        "fixed inset-0 z-[70] flex items-center justify-center p-4 transition-opacity duration-300",
-        open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
-      )}
+      className="fixed inset-0 z-[70] flex items-center justify-center p-4"
     >
       <button
         type="button"
         aria-label="Закрыть"
-        tabIndex={open ? 0 : -1}
         onClick={onClose}
         className="absolute inset-0 bg-cream/30 backdrop-blur-2xl"
       />
 
-      <div
-        className={cn(
-          "relative w-full max-w-[360px] bg-white p-9 text-center",
-          "shadow-[0_30px_90px_-20px_rgba(14,14,14,0.4)]",
-          "transition-transform duration-300 ease-[cubic-bezier(.2,.8,.2,1)]",
-          open ? "translate-y-0" : "translate-y-4",
-        )}
-      >
+      <div className="modal-pop relative w-full max-w-[360px] bg-white p-9 text-center shadow-[0_30px_90px_-20px_rgba(14,14,14,0.4)]">
         <button
           type="button"
           aria-label="Закрыть"
@@ -64,6 +58,7 @@ export function AccountPopup({ open, onClose }: AccountPopupProps): React.JSX.El
           Профиль и история заказов появятся здесь в ближайшее время.
         </p>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
