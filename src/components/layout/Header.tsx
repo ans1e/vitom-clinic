@@ -8,6 +8,7 @@ import { useCartStore } from "@/store/cart";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { AccountPopup } from "@/components/layout/AccountPopup";
+import { SearchOverlay } from "@/components/layout/SearchOverlay";
 import { MenuHoverLink } from "@/components/ui/menu-hover-effects";
 
 const NAV = [
@@ -24,6 +25,7 @@ export function Header(): React.JSX.Element {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   // Cart is persisted to localStorage; render the count only after mount to
   // avoid a server/client hydration mismatch.
   const [hydrated, setHydrated] = useState(false);
@@ -55,7 +57,12 @@ export function Header(): React.JSX.Element {
             VITOM&nbsp;CLINIC
           </Link>
           <div className="flex items-center gap-4 sm:gap-5 text-ink md:absolute md:right-0">
-            <button type="button" aria-label="Поиск" className="hidden md:inline-flex hover:opacity-60 transition-opacity">
+            <button
+              type="button"
+              aria-label="Поиск"
+              onClick={() => setSearchOpen(true)}
+              className="hover:opacity-60 transition-opacity"
+            >
               <Search className="w-[22px] h-[22px]" strokeWidth={1.5} />
             </button>
             <button
@@ -103,6 +110,7 @@ export function Header(): React.JSX.Element {
       <MobileNav open={menuOpen} onClose={() => setMenuOpen(false)} items={NAV} />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <AccountPopup open={accountOpen} onClose={() => setAccountOpen(false)} />
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }

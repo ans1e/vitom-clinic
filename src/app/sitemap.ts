@@ -7,7 +7,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const slugs = await getProductSlugs();
   const now = new Date();
 
-  const staticRoutes: MetadataRoute.Sitemap = ["", "/about", "/catalog"].map((path) => ({
+  const staticRoutes: MetadataRoute.Sitemap = ["", "/about", "/catalog", "/faq"].map((path) => ({
     url: `${SITE_URL}${path}`,
     lastModified: now,
     changeFrequency: "weekly",

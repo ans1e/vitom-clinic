@@ -1,0 +1,90 @@
+import type { Metadata } from "next";
+
+import { Reveal } from "@/components/shared/Reveal";
+import { FaqAccordion, type FaqItem } from "@/components/shared/FaqAccordion";
+import { buildMetadata } from "@/lib/metadata";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Вопросы и ответы",
+  description:
+    "Частые вопросы о морском коллагене VITOM: форматы шотов и желе, способ приёма, курсы, доставка и где купить.",
+  path: "/faq",
+});
+
+const FAQ: readonly FaqItem[] = [
+  {
+    question: "Чем шоты VITOSHOTS отличаются от желе?",
+    answer:
+      "Это два формата одного курса. VITOSHOTS — готовый жидкий приём без подготовки, удобно брать с собой. Желе — мягкий формат для домашнего ритуала. Состав и действие совпадают, отличается только способ приёма и текстура.",
+  },
+  {
+    question: "Как принимать и сколько длится курс?",
+    answer:
+      "Один приём в день, лучше утром натощак или между приёмами пищи. Объём 700 мл и 650 г рассчитан примерно на месячный курс; варианты 1400 мл и 2100 мл — на более длинные курсы со скидкой за объём.",
+  },
+  {
+    question: "Какие вкусы есть в линейке?",
+    answer:
+      "Три вкуса в обоих форматах: смородина, яблоко и вишня. Вкусы взаимозаменяемы по составу — выбирайте по предпочтению.",
+  },
+  {
+    question: "Из чего сделан коллаген?",
+    answer:
+      "В основе морской коллаген — он отличается высокой биодоступностью. Состав чистый, без лишних добавок; полный список ингредиентов указан на упаковке каждого продукта.",
+  },
+  {
+    question: "Как оформить заказ и получить доставку?",
+    answer:
+      "Заказы идут через Uzum Market — нажмите «Где купить» или иконку Uzum в подвале сайта. Доставка и оплата проходят на стороне маркетплейса по всему Узбекистану.",
+  },
+  {
+    question: "Есть ли сертификаты качества?",
+    answer:
+      "Да. Продукция сопровождается сертификатами соответствия — раздел «Сертификаты» на главной странице. По дополнительным документам напишите нам в Telegram.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+
+export default function FaqPage(): React.JSX.Element {
+  return (
+    <section className="bg-cream">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
+        <Reveal className="grid lg:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-20 items-start">
+          <div className="lg:sticky lg:top-[calc(var(--header-h,79px)+2.5rem)]">
+            <p className="eyebrow text-[11px] text-smoke mb-6">Support</p>
+            <h1 className="display text-[44px] sm:text-[56px] text-ink mb-6">
+              Вопросы<br className="hidden sm:block" /> и ответы
+            </h1>
+            <p className="text-[16px] leading-[1.8] text-smoke max-w-[420px]">
+              Коротко о форматах, приёме и заказе VITOM. Не нашли ответ — напишите нам
+              в Telegram, отвечаем в течение дня.
+            </p>
+            <a
+              href="https://t.me/vitom_uz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-dark text-[12px] mt-8 px-7 py-3.5 rounded-full"
+            >
+              Написать в Telegram
+            </a>
+          </div>
+
+          <FaqAccordion items={FAQ} />
+        </Reveal>
+      </div>
+    </section>
+  );
+}

@@ -7,6 +7,7 @@ const NAV = [
   { label: "О нас", href: "/about" },
   { label: "Каталог", href: "/catalog" },
   { label: "Доставка и оплата", href: "/#delivery" },
+  { label: "FAQ", href: "/faq" },
   { label: "Где купить", href: "/#retail" },
   { label: "Сертификаты", href: "/#trust" },
   { label: "Контакты", href: "/#contacts" },
