@@ -1,13 +1,11 @@
 "use client";
 
-import { useCallback, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ProductModal } from "@/components/catalog/ProductModal";
+import { buttonVariants } from "@/components/ui/button";
 import { cn, formatPrice } from "@/lib/utils";
 import type { Product } from "@/types";
 
@@ -20,8 +18,6 @@ interface ProductCardProps {
 
 export function ProductCard({ product, variant = "grid", priority = false }: ProductCardProps): React.JSX.Element {
   const href = `/catalog/${product.slug}`;
-  const [modalOpen, setModalOpen] = useState(false);
-  const closeModal = useCallback(() => setModalOpen(false), []);
 
   return (
     <motion.article
@@ -59,12 +55,10 @@ export function ProductCard({ product, variant = "grid", priority = false }: Pro
       </Link>
       <div className="flex flex-col items-center gap-4 border-t border-line pt-6">
         <span className="wordmark text-[15px] tracking-[0.04em] text-ink">{formatPrice(product.price)}</span>
-        <Button type="button" variant="outline" size="sm" onClick={() => setModalOpen(true)}>
+        <Link href={href} className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
           Подробнее
-        </Button>
+        </Link>
       </div>
-
-      <ProductModal product={product} open={modalOpen} onClose={closeModal} />
     </motion.article>
   );
 }

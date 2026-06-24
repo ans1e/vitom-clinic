@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 import { getProduct, getProductSlugs } from "@/lib/api";
-import { AddToCartButton } from "@/components/catalog/AddToCartButton";
+import { ProductDetail } from "@/components/catalog/ProductDetail";
 import { buildMetadata, SITE_NAME, SITE_URL } from "@/lib/metadata";
-import { cn, formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/lib/utils";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -57,48 +57,16 @@ export default async function ProductPage({ params }: PageProps): Promise<React.
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-14 lg:py-20">
-        <nav aria-label="Хлебные крошки" className="eyebrow text-[10px] text-smoke mb-10 flex gap-2">
-          <Link href="/catalog" className="hover:text-ink transition-colors">
-            Каталог
-          </Link>
-          <span aria-hidden="true">/</span>
-          <span className="text-ink">{product.flavor}</span>
-        </nav>
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-10 lg:py-16">
+        <Link
+          href="/catalog"
+          className="inline-flex items-center gap-2 eyebrow text-[10px] text-smoke hover:text-ink transition-colors mb-9"
+        >
+          <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
+          Назад в каталог
+        </Link>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className={cn(product.gradient, "overflow-hidden aspect-square flex items-center justify-center")}>
-            <Image
-              src={product.image}
-              alt={product.imageAlt}
-              width={product.imageWidth}
-              height={product.imageHeight}
-              priority
-              sizes="(max-width: 1024px) 90vw, 600px"
-              className={cn("h-auto", product.imageWidthClass)}
-            />
-          </div>
-
-          <div>
-            <p className="eyebrow text-[11px] text-smoke mb-5">
-              {product.category} / {product.flavor}
-            </p>
-            <h1 className="display text-[40px] sm:text-[52px] text-ink mb-4">{product.name}</h1>
-            <p className="text-[16px] leading-[1.7] text-smoke max-w-[440px] mb-8">
-              {product.description}. Вкус «{product.flavor}» — без сахара, без искусственных
-              красителей, 100% натуральный.
-            </p>
-            <p className="wordmark text-[26px] tracking-[0.04em] text-ink mb-10">
-              {formatPrice(product.price)}
-            </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <AddToCartButton product={product} />
-              <Link href="/catalog" className="navlink eyebrow text-[11px] text-ink">
-                Назад в каталог
-              </Link>
-            </div>
-          </div>
-        </div>
+        <ProductDetail product={product} />
       </div>
     </section>
   );

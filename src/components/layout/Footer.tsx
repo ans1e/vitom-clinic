@@ -46,7 +46,7 @@ export function Footer(): React.JSX.Element {
         </p>
 
         <div className="border-t border-white/12 pt-12 flex flex-col items-center gap-10">
-          <nav className="flex flex-wrap items-center justify-center gap-x-10 lg:gap-x-12 gap-y-4 text-[15px] text-white/80">
+          <nav className="grid grid-cols-2 gap-x-8 gap-y-3.5 w-full max-w-[300px] text-center text-[15px] text-white/80 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:w-auto sm:max-w-none sm:gap-x-10 sm:gap-y-4 lg:gap-x-12">
             {NAV.map((item) => (
               <Link key={item.label} href={item.href} className="hover:text-white transition-colors">
                 {item.label}

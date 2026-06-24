@@ -71,7 +71,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps): React.JSX.
         className="absolute inset-0 bg-cream/40 backdrop-blur-2xl"
       />
 
-      <div className="modal-pop relative mx-auto w-full max-w-[760px] px-6 pt-[max(18vh,96px)]">
+      <div className="modal-pop relative mx-auto w-full max-w-[760px] px-6 pt-[calc(var(--header-h,79px)+1.25rem)] sm:pt-[max(18vh,96px)]">
         <div className="flex items-center gap-3 border-b-2 border-ink pb-4">
           <Search className="w-6 h-6 text-ink shrink-0" strokeWidth={1.5} />
           <input
