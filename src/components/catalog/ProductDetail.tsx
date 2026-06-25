@@ -88,12 +88,8 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
           {product.name}
         </h1>
 
-        <p className="wordmark text-[30px] tracking-[0.03em] text-ink mb-6">
+        <p className="wordmark text-[30px] tracking-[0.03em] text-ink mb-8">
           {formatPrice(variant.price, "")}
-        </p>
-
-        <p className="text-[15px] leading-[1.75] text-smoke max-w-[480px] mb-9">
-          {getShortDescription(product)}
         </p>
 
         <p className="eyebrow text-[10px] text-smoke mb-3">Объём</p>
@@ -148,14 +144,15 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
 
           <div className="grid grid-cols-2 gap-3 sm:flex sm:gap-3">
             {/* Fixed equal widths on desktop so the row never reflows when the
-                label changes to "Добавлено ✓"; both CTAs read as a matched pair. */}
+                label changes to "Добавлено ✓"; both CTAs read as a matched pair.
+                Pill shape mirrors the quantity stepper. */}
             <Button
               type="button"
               variant="dark"
               size="lg"
               onClick={handleAdd}
               aria-live="polite"
-              className="w-full sm:w-[168px]"
+              className="w-full sm:w-[168px] rounded-full"
             >
               {added ? "Добавлено ✓" : "В корзину"}
             </Button>
@@ -164,12 +161,17 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
               href={TELEGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full sm:w-[168px]")}
+              className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full sm:w-[168px] rounded-full")}
             >
               Написать
             </a>
           </div>
         </div>
+
+        {/* Description sits below the actions, as the last thing in the column. */}
+        <p className="text-[15px] leading-[1.75] text-smoke max-w-[480px] mt-10 pt-8 border-t border-line">
+          {getShortDescription(product)}
+        </p>
       </div>
     </div>
   );

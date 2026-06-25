@@ -7,6 +7,7 @@ import { X, Plus, Minus, Trash2 } from "lucide-react";
 
 import { useCartStore } from "@/store/cart";
 import { useScrollLock } from "@/hooks/useScrollLock";
+import { buildOrderTelegramUrl } from "@/lib/order";
 import { cn, formatPrice } from "@/lib/utils";
 
 interface CartDrawerProps {
@@ -145,9 +146,15 @@ export function CartDrawer({ open, onClose }: CartDrawerProps): React.JSX.Elemen
                 <span className="eyebrow text-[11px] text-smoke">Итого</span>
                 <span className="wordmark text-[18px] tracking-[0.03em] text-ink">{formatPrice(total, "")}</span>
               </div>
-              <button type="button" className="btn-dark w-full text-[12px] tracking-[0.18em] uppercase py-4 mb-3">
+              <a
+                href={buildOrderTelegramUrl(items)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onClose}
+                className="btn-dark w-full text-[12px] tracking-[0.18em] uppercase py-4 mb-3"
+              >
                 Оформить заказ
-              </button>
+              </a>
               <button
                 type="button"
                 onClick={clearCart}

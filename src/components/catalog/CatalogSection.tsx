@@ -9,7 +9,7 @@ export async function CatalogSection(): Promise<React.JSX.Element> {
     <section id="catalog" className="bg-cream">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-20 lg:py-28 space-y-24 lg:space-y-36">
         <CategoryBlock
-          title="Коллагеновые шоты"
+          title="Шоты"
           image="/assets/shots-banner.webp"
           imageAlt="VITOSHOTS — коллагеновые шоты"
           ctaHref="/catalog?format=shots"
@@ -18,7 +18,7 @@ export async function CatalogSection(): Promise<React.JSX.Element> {
         />
 
         <CategoryBlock
-          title="Коллагеновое желе"
+          title="Желе"
           image="/assets/jelly-banner.webp"
           imageAlt="VITOM — коллагеновое желе"
           ctaHref="/catalog?format=jelly"
