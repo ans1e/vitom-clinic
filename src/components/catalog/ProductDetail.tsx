@@ -4,8 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { Minus, Plus } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { getVariants } from "@/lib/variants";
+import { getShortDescription } from "@/lib/product-content";
 import { useCartStore } from "@/store/cart";
 import { cn, formatPrice } from "@/lib/utils";
 import type { Product } from "@/types";
@@ -39,11 +40,6 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1800);
   };
-
-  const description =
-    product.format === "shots"
-      ? "Порционный формат VITOSHOTS — готовый жидкий курс без подготовки. Морской коллаген с высокой биодоступностью, без сахара и искусственных красителей. Один приём в день для ежедневного ритуала красоты и тонуса."
-      : "Желе VITOM — мягкий домашний формат курса на морском коллагене. Без сахара и искусственных красителей, удобная порция на каждый день. Объём и цена меняются при выборе варианта.";
 
   return (
     <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
@@ -88,15 +84,16 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
         <p className="eyebrow text-[11px] text-smoke mb-4">
           {product.category} / {product.flavor}
         </p>
-        <h1 className="display text-[38px] sm:text-[52px] leading-[1.04] text-ink mb-3">
+        <h1 className="display text-[38px] sm:text-[52px] leading-[1.04] text-ink mb-5">
           {product.name}
         </h1>
-        <p className="text-[13px] text-smoke mb-7">
-          Артикул: <span className="text-ink">{product.id.toUpperCase()}</span>
+
+        <p className="wordmark text-[30px] tracking-[0.03em] text-ink mb-6">
+          {formatPrice(variant.price, "")}
         </p>
 
-        <p className="wordmark text-[30px] tracking-[0.03em] text-ink mb-8">
-          {formatPrice(variant.price, "")}
+        <p className="text-[15px] leading-[1.75] text-smoke max-w-[480px] mb-9">
+          {getShortDescription(product)}
         </p>
 
         <p className="eyebrow text-[10px] text-smoke mb-3">Объём</p>
@@ -122,7 +119,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
           })}
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 mb-8">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center border border-line rounded-full">
             <button
               type="button"
@@ -146,7 +143,16 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             </button>
           </div>
 
-          <Button type="button" variant="dark" size="lg" onClick={handleAdd} aria-live="polite">
+          {/* Fixed equal widths so the row never reflows when the label changes
+              to "Добавлено ✓" and both CTAs read as a matched pair. */}
+          <Button
+            type="button"
+            variant="dark"
+            size="lg"
+            onClick={handleAdd}
+            aria-live="polite"
+            className="w-[168px]"
+          >
             {added ? "Добавлено ✓" : "В корзину"}
           </Button>
 
@@ -154,18 +160,10 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             href={TELEGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-out text-[12px] px-7 py-3.5 rounded-full"
+            className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-[168px]")}
           >
             Написать
           </a>
-        </div>
-
-        <div className="border-t border-line pt-8 space-y-4 max-w-[520px]">
-          <p className="text-[15px] leading-[1.8] text-smoke">{description}</p>
-          <p className="text-[15px] leading-[1.8] text-smoke">
-            Вкус «{product.flavor.toLowerCase()}» — натуральный, без приторности. Заказ и
-            доставка по Узбекистану — через Uzum Market.
-          </p>
         </div>
       </div>
     </div>

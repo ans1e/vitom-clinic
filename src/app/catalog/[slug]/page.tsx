@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
 
-import { getProduct, getProductSlugs } from "@/lib/api";
+import { getProduct, getProducts, getProductSlugs } from "@/lib/api";
 import { ProductDetail } from "@/components/catalog/ProductDetail";
+import { ProductTabs } from "@/components/catalog/ProductTabs";
+import { RelatedProducts } from "@/components/catalog/RelatedProducts";
+import { BackButton } from "@/components/catalog/BackButton";
+import { getProductTabs } from "@/lib/product-content";
 import { buildMetadata, SITE_NAME, SITE_URL } from "@/lib/metadata";
 import { formatPrice } from "@/lib/utils";
 
@@ -34,6 +36,11 @@ export default async function ProductPage({ params }: PageProps): Promise<React.
   const product = await getProduct(slug);
   if (!product) notFound();
 
+  // "Смотрите также" shows the opposite format: jelly when viewing shots, and
+  // shots when viewing jelly.
+  const relatedFormat = product.format === "shots" ? "jelly" : "shots";
+  const related = (await getProducts(relatedFormat)).slice(0, 3);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -58,15 +65,15 @@ export default async function ProductPage({ params }: PageProps): Promise<React.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-10 lg:py-16">
-        <Link
-          href="/catalog"
-          className="inline-flex items-center gap-2 eyebrow text-[10px] text-smoke hover:text-ink transition-colors mb-9"
-        >
-          <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
-          Назад в каталог
-        </Link>
+        <BackButton />
 
         <ProductDetail product={product} />
+
+        <div className="mt-16 lg:mt-24">
+          <ProductTabs tabs={getProductTabs(product)} />
+        </div>
+
+        <RelatedProducts products={related} />
       </div>
     </section>
   );
