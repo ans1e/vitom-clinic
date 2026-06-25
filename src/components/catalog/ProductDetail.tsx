@@ -119,8 +119,11 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
           })}
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center border border-line rounded-full">
+        {/* On mobile the stepper sits on its own line and the two CTAs share a
+            row so "Написать" never drops below; on desktop everything is inline
+            with fixed, equal button widths. */}
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <div className="flex items-center self-start border border-line rounded-full">
             <button
               type="button"
               aria-label="Уменьшить количество"
@@ -143,27 +146,29 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             </button>
           </div>
 
-          {/* Fixed equal widths so the row never reflows when the label changes
-              to "Добавлено ✓" and both CTAs read as a matched pair. */}
-          <Button
-            type="button"
-            variant="dark"
-            size="lg"
-            onClick={handleAdd}
-            aria-live="polite"
-            className="w-[168px]"
-          >
-            {added ? "Добавлено ✓" : "В корзину"}
-          </Button>
+          <div className="grid grid-cols-2 gap-3 sm:flex sm:gap-3">
+            {/* Fixed equal widths on desktop so the row never reflows when the
+                label changes to "Добавлено ✓"; both CTAs read as a matched pair. */}
+            <Button
+              type="button"
+              variant="dark"
+              size="lg"
+              onClick={handleAdd}
+              aria-live="polite"
+              className="w-full sm:w-[168px]"
+            >
+              {added ? "Добавлено ✓" : "В корзину"}
+            </Button>
 
-          <a
-            href={TELEGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-[168px]")}
-          >
-            Написать
-          </a>
+            <a
+              href={TELEGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full sm:w-[168px]")}
+            >
+              Написать
+            </a>
+          </div>
         </div>
       </div>
     </div>
