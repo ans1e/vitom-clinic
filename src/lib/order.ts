@@ -29,5 +29,5 @@ export function buildOrderDraft(items: CartItem[]): string {
 /** Telegram deep link that opens a chat with the order draft pre-filled. */
 export function buildOrderTelegramUrl(items: CartItem[]): string {
   const text = encodeURIComponent(buildOrderDraft(items));
-  return `https://t.me/${TELEGRAM_USER}?text=${text}&profile`;
+  return `https://t.me/${TELEGRAM_USER}?text=${text}&${TELEGRAM_USER}`;
 }
