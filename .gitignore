@@ -26,6 +26,14 @@ next-env.d.ts
 
 # local screenshot workflow artifacts
 /temporary screenshots/
+/.playwright-mcp/
+# loose verification screenshots & scratch image conversions at repo root
+/d-*.png
+/m-*.png
+/scratch_*
+# reference screenshots shared during development
+/photo_*.jpg
+/Снимок экрана*.png
 
 # mcp servers
 /.vscode
