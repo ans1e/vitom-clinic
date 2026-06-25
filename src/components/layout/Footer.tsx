@@ -1,27 +1,7 @@
-import Link from "next/link";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
-
-const LINK_GROUPS = [
-  {
-    title: "Магазин",
-    links: [
-      { label: "Каталог", href: "/catalog" },
-      { label: "Где купить", href: "/#retail" },
-      { label: "Доставка и оплата", href: "/#delivery" },
-    ],
-  },
-  {
-    title: "Бренд",
-    links: [
-      { label: "О нас", href: "/about" },
-      { label: "FAQ", href: "/faq" },
-      { label: "Сертификаты", href: "/#trust" },
-      { label: "Контакты", href: "/#contacts" },
-    ],
-  },
-] as const;
+import { FooterNav } from "@/components/layout/FooterNav";
 
 const SOCIALS = [
   {
@@ -55,26 +35,8 @@ export function Footer(): React.JSX.Element {
           VITOM&nbsp;CLINIC
         </p>
 
-        <div className="border-t border-white/12 pt-12 flex flex-col items-center gap-12">
-          <nav className="w-full max-w-[420px] grid grid-cols-2 gap-x-10 sm:gap-x-24 gap-y-9">
-            {LINK_GROUPS.map((group) => (
-              <div key={group.title}>
-                <p className="eyebrow text-[10px] text-white/40 mb-4">{group.title}</p>
-                <ul className="space-y-3">
-                  {group.links.map((item) => (
-                    <li key={item.label}>
-                      <Link
-                        href={item.href}
-                        className="text-[15px] text-white/75 hover:text-white transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </nav>
+        <div className="border-t border-white/12 pt-12 flex flex-col items-center gap-10">
+          <FooterNav />
           <div className="flex items-center justify-center gap-4">
             {SOCIALS.map((social) => (
               <a

@@ -1,0 +1,194 @@
+- generic [active] [ref=e1]:
+  - link "К основному содержимому" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "VITOM CLINIC" [ref=e6] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e7]:
+          - button "Поиск" [ref=e8]:
+            - img [ref=e9]
+          - button "Корзина" [ref=e12]:
+            - img [ref=e13]
+            - generic [ref=e16]: "2"
+          - button "Аккаунт" [ref=e17]:
+            - img [ref=e18]
+      - navigation [ref=e21]:
+        - link "О бренде" [ref=e22] [cursor=pointer]:
+          - /url: /about
+          - generic [ref=e23]: О бренде
+        - link "Каталог" [ref=e25] [cursor=pointer]:
+          - /url: /catalog
+          - generic [ref=e26]: Каталог
+        - link "Доставка и оплата" [ref=e28] [cursor=pointer]:
+          - /url: /#delivery
+          - generic [ref=e29]: Доставка и оплата
+        - link "Где купить" [ref=e31] [cursor=pointer]:
+          - /url: /#retail
+          - generic [ref=e32]: Где купить
+        - link "Сертификаты" [ref=e34] [cursor=pointer]:
+          - /url: /#trust
+          - generic [ref=e35]: Сертификаты
+        - link "Контакты" [ref=e37] [cursor=pointer]:
+          - /url: /#contacts
+          - generic [ref=e38]: Контакты
+  - dialog "Корзина":
+    - button "Закрыть корзину"
+    - generic:
+      - generic:
+        - generic: Корзина · 2
+        - button "Закрыть корзину":
+          - img
+      - list:
+        - listitem:
+          - generic:
+            - img "VITOSHOTS — Вишня, 700 мл"
+          - generic:
+            - paragraph: VITOSHOTS — Вишня, 700 мл
+            - paragraph: 650 000 сум
+            - generic:
+              - generic:
+                - button "Уменьшить":
+                  - img
+                - generic: "2"
+                - button "Увеличить":
+                  - img
+              - button "Удалить из корзины":
+                - img
+      - generic:
+        - generic:
+          - generic: Итого
+          - generic: 1 300 000 сум
+        - button "Оформить заказ"
+        - button "Очистить корзину"
+  - main [ref=e40]:
+    - generic [ref=e41]:
+      - img "Продукты VITOM — морской коллаген и шоты VITOSHOTS" [ref=e42]
+      - generic [ref=e45]:
+        - heading "Морской коллаген для ежедневного ритуала" [level=1] [ref=e46]
+        - paragraph [ref=e47]: Два формата приёма, чистый состав и понятные курсы. Откройте свежесть и эффективность в каждой порции VITOM.
+        - generic [ref=e48]:
+          - link "К подбору" [ref=e49] [cursor=pointer]:
+            - /url: "#catalog"
+          - link "О бренде" [ref=e50] [cursor=pointer]:
+            - /url: /about
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - paragraph [ref=e54]: Product catalog
+        - heading "Два формата приёма" [level=2] [ref=e55]
+        - paragraph [ref=e56]: Шоты и желе VITOM представлены в трёх объёмах. Сверяйте каталог, чтобы выбрать формат и вкус.
+      - region [ref=e59]:
+        - generic [ref=e61]:
+          - group [ref=e62]:
+            - article [ref=e63]:
+              - link "Хит VITOSHOTS — смородина Шоты / Смородина VITOSHOTS" [ref=e64] [cursor=pointer]:
+                - /url: /catalog/vitoshots-smorodina
+                - generic [ref=e65]:
+                  - generic [ref=e66]: Хит
+                  - img "VITOSHOTS — смородина" [ref=e67]
+                - paragraph [ref=e68]: Шоты / Смородина
+                - heading "VITOSHOTS" [level=3] [ref=e69]
+              - generic [ref=e70]:
+                - generic [ref=e71]: от 650 000 сум
+                - link "Подробнее" [ref=e72] [cursor=pointer]:
+                  - /url: /catalog/vitoshots-smorodina
+          - group [ref=e73]:
+            - article [ref=e74]:
+              - link "VITOSHOTS — яблоко Шоты / Яблоко VITOSHOTS" [ref=e75] [cursor=pointer]:
+                - /url: /catalog/vitoshots-yabloko
+                - img "VITOSHOTS — яблоко" [ref=e77]
+                - paragraph [ref=e78]: Шоты / Яблоко
+                - heading "VITOSHOTS" [level=3] [ref=e79]
+              - generic [ref=e80]:
+                - generic [ref=e81]: от 650 000 сум
+                - link "Подробнее" [ref=e82] [cursor=pointer]:
+                  - /url: /catalog/vitoshots-yabloko
+          - group [ref=e83]:
+            - article [ref=e84]:
+              - link "Коллаген желе — смородина Желе / Смородина Коллаген желе" [ref=e85] [cursor=pointer]:
+                - /url: /catalog/kollagen-zhele-smorodina
+                - img "Коллаген желе — смородина" [ref=e87]
+                - paragraph [ref=e88]: Желе / Смородина
+                - heading "Коллаген желе" [level=3] [ref=e89]
+              - generic [ref=e90]:
+                - generic [ref=e91]: от 500 000 сум
+                - link "Подробнее" [ref=e92] [cursor=pointer]:
+                  - /url: /catalog/kollagen-zhele-smorodina
+          - group [ref=e93]:
+            - article [ref=e94]:
+              - link "Коллаген желе — яблоко Желе / Яблоко Коллаген желе" [ref=e95] [cursor=pointer]:
+                - /url: /catalog/kollagen-zhele-yabloko
+                - img "Коллаген желе — яблоко" [ref=e97]
+                - paragraph [ref=e98]: Желе / Яблоко
+                - heading "Коллаген желе" [level=3] [ref=e99]
+              - generic [ref=e100]:
+                - generic [ref=e101]: от 500 000 сум
+                - link "Подробнее" [ref=e102] [cursor=pointer]:
+                  - /url: /catalog/kollagen-zhele-yabloko
+          - group [ref=e103]:
+            - article [ref=e104]:
+              - link "Коллаген желе — вишня Желе / Вишня Коллаген желе" [ref=e105] [cursor=pointer]:
+                - /url: /catalog/kollagen-zhele-vishnya
+                - img "Коллаген желе — вишня" [ref=e107]
+                - paragraph [ref=e108]: Желе / Вишня
+                - heading "Коллаген желе" [level=3] [ref=e109]
+              - generic [ref=e110]:
+                - generic [ref=e111]: от 500 000 сум
+                - link "Подробнее" [ref=e112] [cursor=pointer]:
+                  - /url: /catalog/kollagen-zhele-vishnya
+          - group [ref=e113]:
+            - article [ref=e114]:
+              - link "VITOSHOTS — вишня Шоты / Вишня VITOSHOTS" [ref=e115] [cursor=pointer]:
+                - /url: /catalog/vitoshots-vishnya
+                - img "VITOSHOTS — вишня" [ref=e117]
+                - paragraph [ref=e118]: Шоты / Вишня
+                - heading "VITOSHOTS" [level=3] [ref=e119]
+              - generic [ref=e120]:
+                - generic [ref=e121]: от 650 000 сум
+                - link "Подробнее" [ref=e122] [cursor=pointer]:
+                  - /url: /catalog/vitoshots-vishnya
+      - link "Открыть весь каталог" [ref=e124] [cursor=pointer]:
+        - /url: /catalog
+    - generic [ref=e126]:
+      - generic [ref=e127]:
+        - paragraph [ref=e128]: Daily effect
+        - heading "Преимущества" [level=2] [ref=e129]
+      - generic [ref=e130]:
+        - paragraph [ref=e132]: Увлажнённая кожа
+        - paragraph [ref=e134]: Густые волосы
+        - paragraph [ref=e136]: Крепкие ногти
+        - paragraph [ref=e138]: Подвижные суставы
+  - contentinfo [ref=e139]:
+    - generic [ref=e140]:
+      - paragraph [ref=e141]: VITOM CLINIC
+      - generic [ref=e142]:
+        - navigation [ref=e143]:
+          - link "О нас" [ref=e145] [cursor=pointer]:
+            - /url: /about
+          - link "Доставка и оплата" [ref=e147] [cursor=pointer]:
+            - /url: /#delivery
+          - link "FAQ" [ref=e149] [cursor=pointer]:
+            - /url: /faq
+          - link "Контакты" [ref=e151] [cursor=pointer]:
+            - /url: /#contacts
+          - link "Где купить" [ref=e153] [cursor=pointer]:
+            - /url: /#retail
+          - link "Сертификаты" [ref=e155] [cursor=pointer]:
+            - /url: /#trust
+        - generic [ref=e156]:
+          - link "Instagram" [ref=e157] [cursor=pointer]:
+            - /url: https://www.instagram.com/vitom.clinic/
+            - img "Instagram" [ref=e158]
+          - link "Telegram" [ref=e159] [cursor=pointer]:
+            - /url: https://t.me/vitom_uz
+            - img "Telegram" [ref=e160]
+          - link "Uzum Market" [ref=e161] [cursor=pointer]:
+            - /url: https://uzum.uz/shop/vitomclinic
+            - img "Uzum Market" [ref=e162]
+      - generic [ref=e163]:
+        - paragraph [ref=e164]: © 2026 VITOM CLINIC
+        - paragraph [ref=e165]: Сайт разработан командой ALTA
+        - link "Политика конфиденциальности" [ref=e166] [cursor=pointer]:
+          - /url: "#"
+  - alert [ref=e167]
