@@ -3,14 +3,24 @@ import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-const NAV = [
-  { label: "О нас", href: "/about" },
-  { label: "Каталог", href: "/catalog" },
-  { label: "Доставка и оплата", href: "/#delivery" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Где купить", href: "/#retail" },
-  { label: "Сертификаты", href: "/#trust" },
-  { label: "Контакты", href: "/#contacts" },
+const LINK_GROUPS = [
+  {
+    title: "Магазин",
+    links: [
+      { label: "Каталог", href: "/catalog" },
+      { label: "Где купить", href: "/#retail" },
+      { label: "Доставка и оплата", href: "/#delivery" },
+    ],
+  },
+  {
+    title: "Бренд",
+    links: [
+      { label: "О нас", href: "/about" },
+      { label: "FAQ", href: "/faq" },
+      { label: "Сертификаты", href: "/#trust" },
+      { label: "Контакты", href: "/#contacts" },
+    ],
+  },
 ] as const;
 
 const SOCIALS = [
@@ -45,12 +55,24 @@ export function Footer(): React.JSX.Element {
           VITOM&nbsp;CLINIC
         </p>
 
-        <div className="border-t border-white/12 pt-12 flex flex-col items-center gap-10">
-          <nav className="grid grid-cols-2 gap-x-8 gap-y-3.5 w-full max-w-[300px] text-center text-[15px] text-white/80 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:w-auto sm:max-w-none sm:gap-x-10 sm:gap-y-4 lg:gap-x-12">
-            {NAV.map((item) => (
-              <Link key={item.label} href={item.href} className="hover:text-white transition-colors">
-                {item.label}
-              </Link>
+        <div className="border-t border-white/12 pt-12 flex flex-col items-center gap-12">
+          <nav className="w-full max-w-[420px] grid grid-cols-2 gap-x-10 sm:gap-x-24 gap-y-9">
+            {LINK_GROUPS.map((group) => (
+              <div key={group.title}>
+                <p className="eyebrow text-[10px] text-white/40 mb-4">{group.title}</p>
+                <ul className="space-y-3">
+                  {group.links.map((item) => (
+                    <li key={item.label}>
+                      <Link
+                        href={item.href}
+                        className="text-[15px] text-white/75 hover:text-white transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </nav>
           <div className="flex items-center justify-center gap-4">

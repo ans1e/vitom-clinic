@@ -22,8 +22,12 @@ export function ProductTabs({ tabs }: { tabs: ProductTab[] }): React.JSX.Element
 
   return (
     <div>
-      {/* Tab bar — scrolls horizontally on small screens. */}
-      <div className="flex gap-7 sm:gap-10 overflow-x-auto scrollbar-hide border-b border-line" role="tablist">
+      {/* Tab bar — spreads across the full width on desktop (bonya-style),
+          scrolls horizontally on small screens. */}
+      <div
+        className="flex gap-7 sm:gap-4 sm:justify-between overflow-x-auto scrollbar-hide border-b border-line"
+        role="tablist"
+      >
         {tabs.map((tab) => {
           const selected = tab.id === current.id;
           return (

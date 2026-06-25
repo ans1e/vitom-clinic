@@ -1,3 +1,12 @@
+"use client";
+
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import type { Product } from "@/types";
 
@@ -10,17 +19,21 @@ export function RelatedProducts({ products }: { products: Product[] }): React.JS
         Смотрите также
       </h2>
 
-      {/* Horizontal scroll row with snap. Negative margins + matching padding let
-          cards scroll edge-to-edge on mobile without clipping hover lift. */}
-      <div className="-mx-6 lg:-mx-10 px-6 lg:px-10 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-px-6 lg:scroll-px-10">
-        <ul className="flex gap-6 lg:gap-8 pb-2">
+      {/* Center-aligned carousel: the focused card sits in the middle with its
+          neighbours peeking on both sides; drag or swipe to browse. */}
+      <Carousel
+        opts={{ align: "center", loop: products.length > 1, dragFree: false }}
+        plugins={[WheelGesturesPlugin()]}
+        className="w-full"
+      >
+        <CarouselContent className="py-2">
           {products.map((product) => (
-            <li key={product.id} className="snap-start shrink-0 w-[260px] sm:w-[300px]">
+            <CarouselItem key={product.id} className="basis-[78%] sm:basis-1/2 lg:basis-1/3">
               <ProductCard product={product} variant="grid" />
-            </li>
+            </CarouselItem>
           ))}
-        </ul>
-      </div>
+        </CarouselContent>
+      </Carousel>
     </section>
   );
 }

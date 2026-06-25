@@ -32,7 +32,7 @@ export function ProductCard({ product, variant = "grid", priority = false }: Pro
         <div
           className={cn(
             product.gradient,
-            "relative overflow-hidden aspect-[4/5] flex items-center justify-center mb-7",
+            "relative overflow-hidden aspect-square flex items-center justify-center mb-5",
           )}
         >
           {product.badge && <Badge badge={product.badge} className="absolute top-4 left-4 z-10" />}
@@ -46,14 +46,12 @@ export function ProductCard({ product, variant = "grid", priority = false }: Pro
             className={cn("card-img h-auto", product.imageWidthClass)}
           />
         </div>
-        <p className="eyebrow text-[10px] text-smoke mb-3">
+        <p className="eyebrow text-[10px] text-smoke mb-2.5">
           {product.category} / {product.flavor}
         </p>
-        <h3 className="wordmark text-[20px] tracking-[0.06em] text-ink mb-2">{product.name}</h3>
-        <p className="text-[14px] text-smoke mb-1">{product.description}</p>
-        <p className="text-[14px] text-smoke mb-6">{product.flavor}</p>
+        <h3 className="wordmark text-[19px] tracking-[0.06em] text-ink mb-5">{product.name}</h3>
       </Link>
-      <div className="flex flex-col items-center gap-4 border-t border-line pt-6">
+      <div className="flex flex-col items-center gap-4 border-t border-line pt-5">
         <span className="wordmark text-[15px] tracking-[0.04em] text-ink">{formatPrice(product.price)}</span>
         <Link href={href} className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
           Подробнее

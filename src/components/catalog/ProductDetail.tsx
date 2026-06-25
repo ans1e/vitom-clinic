@@ -123,24 +123,24 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             row so "Написать" never drops below; on desktop everything is inline
             with fixed, equal button widths. */}
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-          <div className="flex items-center self-start border border-line rounded-full">
+          <div className="flex items-center justify-between w-full sm:w-auto sm:justify-start border border-line rounded-full">
             <button
               type="button"
               aria-label="Уменьшить количество"
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="w-11 h-11 flex items-center justify-center text-ink hover:bg-paper transition-colors rounded-l-full disabled:opacity-40"
+              className="w-12 h-12 flex items-center justify-center text-ink hover:bg-paper transition-colors rounded-l-full disabled:opacity-40"
               disabled={quantity <= 1}
             >
               <Minus className="w-4 h-4" strokeWidth={1.5} />
             </button>
-            <span className="w-10 text-center text-[15px] font-medium tabular-nums" aria-live="polite">
+            <span className="flex-1 sm:flex-none sm:w-10 text-center text-[15px] font-medium tabular-nums" aria-live="polite">
               {quantity}
             </span>
             <button
               type="button"
               aria-label="Увеличить количество"
               onClick={() => setQuantity((q) => q + 1)}
-              className="w-11 h-11 flex items-center justify-center text-ink hover:bg-paper transition-colors rounded-r-full"
+              className="w-12 h-12 flex items-center justify-center text-ink hover:bg-paper transition-colors rounded-r-full"
             >
               <Plus className="w-4 h-4" strokeWidth={1.5} />
             </button>
