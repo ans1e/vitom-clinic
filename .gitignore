@@ -32,8 +32,7 @@ next-env.d.ts
 /m-*.png
 /scratch_*
 # reference screenshots shared during development
-/photo_*.jpg
-/Снимок экрана*.png
+
 
 # mcp servers
 /.vscode

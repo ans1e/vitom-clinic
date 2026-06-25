@@ -16,6 +16,7 @@ export async function CatalogSection(): Promise<React.JSX.Element> {
           imageAlt="VITOSHOTS — коллагеновые шоты"
           ctaHref="/catalog?format=shots"
           products={shots}
+          imageFit="contain"
           priority
         />
 
