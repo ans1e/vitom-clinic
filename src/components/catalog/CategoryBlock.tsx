@@ -8,50 +8,41 @@ import { cn } from "@/lib/utils";
 import type { Product } from "@/types";
 
 interface CategoryBlockProps {
-  eyebrow: string;
   title: string;
-  subtitle: string;
   image: string;
   imageAlt: string;
   ctaHref: string;
   products: Product[];
-  /** "contain" for transparent product cut-outs on a surface; "cover" for photos. */
-  imageFit?: "cover" | "contain";
   /** First block on the page loads its banner eagerly for LCP. */
   priority?: boolean;
 }
 
 export function CategoryBlock({
-  eyebrow,
   title,
-  subtitle,
   image,
   imageAlt,
   ctaHref,
   products,
-  imageFit = "cover",
   priority = false,
 }: CategoryBlockProps): React.JSX.Element {
   return (
     <div>
-      {/* Banner: image left, copy + CTA right (stacks on mobile). Capped height
-          keeps the whole block within one viewport. */}
+      {/* Banner: image left, title + CTA right. On mobile it stacks and centres
+          (bonya-style): image, then title, then a full-width button. */}
       <Reveal className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-14 lg:mb-20">
-        <div className="relative w-full max-w-[460px] mx-auto lg:mx-0 h-[320px] sm:h-[420px] lg:h-[480px] overflow-hidden bg-paper">
+        <div className="relative w-full max-w-[420px] mx-auto lg:mx-0 aspect-[3/4] overflow-hidden">
           <Image
             src={image}
             alt={imageAlt}
             fill
             priority={priority}
-            sizes="(max-width: 1024px) 100vw, 460px"
-            className={cn(imageFit === "contain" ? "object-contain p-5" : "object-cover")}
+            sizes="(max-width: 1024px) 100vw, 420px"
+            className="object-cover"
           />
         </div>
 
-        <div className="lg:pl-4 max-w-[440px]">
-          <p className="eyebrow text-[11px] text-smoke mb-5">{eyebrow}</p>
-          <h2 className="display text-[34px] sm:text-[48px] leading-[1.05] text-ink mb-5">{title}</h2>
-          <p className="text-[16px] leading-[1.8] text-smoke mb-9">{subtitle}</p>
+        <div className="text-center lg:text-left max-w-[440px] mx-auto lg:mx-0 lg:pl-4">
+          <h2 className="display text-[34px] sm:text-[48px] leading-[1.05] text-ink mb-8">{title}</h2>
           <Link href={ctaHref} className={cn(buttonVariants({ variant: "dark", size: "lg" }), "w-full")}>
             К покупкам
           </Link>
