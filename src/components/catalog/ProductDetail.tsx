@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, MessageCircle } from "lucide-react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { getVariants } from "@/lib/variants";
@@ -42,12 +42,13 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
   };
 
   return (
-    <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-      {/* Image — both jelly jars are mounted and cross-fade instantly. */}
+    <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start pb-28 lg:pb-0">
+      {/* Image — square so it always fits the viewport; both jelly jars are
+          mounted and cross-fade instantly. */}
       <div
         className={cn(
           product.gradient,
-          "relative flex items-center justify-center overflow-hidden aspect-square lg:aspect-[4/5] p-8",
+          "relative flex items-center justify-center overflow-hidden aspect-square lg:max-h-[560px] p-8 mx-auto w-full max-w-[520px] lg:max-w-none",
         )}
       >
         <Image
@@ -115,11 +116,11 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
           })}
         </div>
 
-        {/* On mobile the stepper sits on its own line and the two CTAs share a
-            row so "Написать" never drops below; on desktop everything is inline
-            with fixed, equal button widths. */}
-        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-          <div className="flex items-center justify-between w-full sm:w-auto sm:justify-start border border-line rounded-full">
+        {/* Desktop: actions inline, with fixed equal button widths so the row
+            never reflows when the label changes to "Добавлено ✓". On mobile the
+            same controls live in the sticky bar below. */}
+        <div className="hidden lg:flex lg:flex-wrap lg:items-center gap-3">
+          <div className="flex items-center border border-line rounded-full">
             <button
               type="button"
               aria-label="Уменьшить количество"
@@ -129,7 +130,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             >
               <Minus className="w-4 h-4" strokeWidth={1.5} />
             </button>
-            <span className="flex-1 sm:flex-none sm:w-10 text-center text-[15px] font-medium tabular-nums" aria-live="polite">
+            <span className="w-10 text-center text-[15px] font-medium tabular-nums" aria-live="polite">
               {quantity}
             </span>
             <button
@@ -142,36 +143,84 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:flex sm:gap-3">
-            {/* Fixed equal widths on desktop so the row never reflows when the
-                label changes to "Добавлено ✓"; both CTAs read as a matched pair.
-                Pill shape mirrors the quantity stepper. */}
-            <Button
-              type="button"
-              variant="dark"
-              size="lg"
-              onClick={handleAdd}
-              aria-live="polite"
-              className="w-full sm:w-[168px] rounded-full"
-            >
-              {added ? "Добавлено ✓" : "В корзину"}
-            </Button>
+          <Button
+            type="button"
+            variant="dark"
+            size="lg"
+            onClick={handleAdd}
+            aria-live="polite"
+            className="w-[168px] rounded-full"
+          >
+            {added ? "Добавлено ✓" : "В корзину"}
+          </Button>
 
-            <a
-              href={TELEGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full sm:w-[168px] rounded-full")}
-            >
-              Написать
-            </a>
-          </div>
+          <a
+            href={TELEGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-[168px] rounded-full")}
+          >
+            Написать
+          </a>
         </div>
 
         {/* Description sits below the actions, as the last thing in the column. */}
-        <p className="text-[15px] leading-[1.75] text-smoke max-w-[480px] mt-10 pt-8 border-t border-line">
+        <p className="text-[15px] leading-[1.75] text-smoke max-w-[480px] mt-8 lg:mt-10 lg:pt-8 lg:border-t lg:border-line">
           {getShortDescription(product)}
         </p>
+      </div>
+
+      {/* Mobile: actions pinned to the bottom of the viewport (bonya-style) so
+          add-to-cart is always reachable while the page scrolls. */}
+      <div className="lg:hidden fixed inset-x-0 bottom-0 z-40 border-t border-line bg-cream/95 backdrop-blur px-4 pt-3 pb-[max(env(safe-area-inset-bottom),0.85rem)]">
+        <div className="flex items-center gap-2.5 max-w-[480px] mx-auto">
+          <div className="flex items-center shrink-0 border border-line rounded-full">
+            <button
+              type="button"
+              aria-label="Уменьшить количество"
+              onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+              className="w-10 h-11 flex items-center justify-center text-ink rounded-l-full disabled:opacity-40"
+              disabled={quantity <= 1}
+            >
+              <Minus className="w-4 h-4" strokeWidth={1.5} />
+            </button>
+            <span className="w-7 text-center text-[15px] font-medium tabular-nums" aria-live="polite">
+              {quantity}
+            </span>
+            <button
+              type="button"
+              aria-label="Увеличить количество"
+              onClick={() => setQuantity((q) => q + 1)}
+              className="w-10 h-11 flex items-center justify-center text-ink rounded-r-full"
+            >
+              <Plus className="w-4 h-4" strokeWidth={1.5} />
+            </button>
+          </div>
+
+          <Button
+            type="button"
+            variant="dark"
+            size="lg"
+            onClick={handleAdd}
+            aria-live="polite"
+            className="flex-1 min-w-0 px-3 rounded-full"
+          >
+            {added ? "Добавлено ✓" : "В корзину"}
+          </Button>
+
+          <a
+            href={TELEGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Написать в Telegram"
+            className={cn(
+              buttonVariants({ variant: "outline", size: "icon" }),
+              "shrink-0 w-11 h-11 rounded-full",
+            )}
+          >
+            <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
+          </a>
+        </div>
       </div>
     </div>
   );

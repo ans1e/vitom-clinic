@@ -1,15 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import { useQueryState, parseAsStringLiteral } from "nuqs";
 
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { cn } from "@/lib/utils";
 import type { Product, ProductFormat } from "@/types";
 
+/** Order and imagery mirror the in-store category chips: Все · Желе · Шоты. */
 const FILTERS = [
-  { value: null, label: "Все" },
-  { value: "shots", label: "Шоты" },
-  { value: "jelly", label: "Желе" },
+  { value: null, label: "Все", image: "/assets/filter-all.webp" },
+  { value: "jelly", label: "Желе", image: "/assets/filter-jelly.webp" },
+  { value: "shots", label: "Шоты", image: "/assets/filter-shots.webp" },
 ] as const;
 
 export function CatalogBrowser({ products }: { products: Product[] }): React.JSX.Element {
@@ -22,7 +24,12 @@ export function CatalogBrowser({ products }: { products: Product[] }): React.JSX
 
   return (
     <div>
-      <div className="flex items-center justify-center gap-3 mb-14" role="group" aria-label="Фильтр по формату">
+      {/* Photographic category chips — round, with the label beneath. */}
+      <div
+        className="flex items-start justify-center gap-7 sm:gap-12 mb-16"
+        role="group"
+        aria-label="Фильтр по формату"
+      >
         {FILTERS.map((filter) => {
           const active = format === filter.value;
           return (
@@ -31,14 +38,37 @@ export function CatalogBrowser({ products }: { products: Product[] }): React.JSX
               type="button"
               aria-pressed={active}
               onClick={() => setFormat(filter.value as ProductFormat | null)}
-              className={cn(
-                "eyebrow text-[11px] px-6 py-3 rounded-full border transition-colors duration-300",
-                active
-                  ? "bg-ink text-white border-ink"
-                  : "bg-transparent text-smoke border-line hover:border-ink hover:text-ink",
-              )}
+              className="group flex flex-col items-center gap-3.5 focus-visible:outline-none"
             >
-              {filter.label}
+              <span
+                className={cn(
+                  "relative block w-[84px] h-[84px] sm:w-[108px] sm:h-[108px] rounded-full overflow-hidden",
+                  "ring-1 ring-line transition-[box-shadow,scale] duration-300",
+                  "group-focus-visible:ring-2 group-focus-visible:ring-ink",
+                  active
+                    ? "ring-2 ring-ink scale-[1.04]"
+                    : "group-hover:ring-ink/50",
+                )}
+              >
+                <Image
+                  src={filter.image}
+                  alt={filter.label}
+                  fill
+                  sizes="108px"
+                  className={cn(
+                    "object-cover transition-[scale] duration-500 group-hover:scale-[1.06]",
+                    !active && "opacity-95",
+                  )}
+                />
+              </span>
+              <span
+                className={cn(
+                  "eyebrow text-[11px] transition-colors duration-300",
+                  active ? "text-ink" : "text-smoke group-hover:text-ink",
+                )}
+              >
+                {filter.label}
+              </span>
             </button>
           );
         })}

@@ -31,13 +31,9 @@ export function Hero(): React.JSX.Element {
 
       <div className="relative z-10 w-full max-w-[1280px] mx-auto px-6 lg:px-10 flex flex-col justify-end md:justify-center pt-12 md:pt-0 pb-10 md:pb-16">
         <Reveal className="max-w-[460px] w-full">
-          <h1 className="hidden md:block display text-[42px] sm:text-[56px] lg:text-[64px] text-ink mb-6">
+          <h1 className="hidden md:block display text-[42px] sm:text-[56px] lg:text-[64px] text-ink mb-9">
             Морской коллаген для&nbsp;ежедневного ритуала
           </h1>
-          <p className="hidden md:block text-[16px] leading-[1.7] text-ink/75 max-w-[420px] mb-9">
-            Два формата приёма, чистый состав и понятные курсы. Откройте свежесть
-            и эффективность в каждой порции VITOM.
-          </p>
           <div className="flex flex-wrap items-center gap-4">
             <a href="#catalog" className={cn(buttonVariants({ variant: "dark", size: "md" }))}>
               К&nbsp;подбору

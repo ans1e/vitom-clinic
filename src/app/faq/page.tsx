@@ -72,17 +72,34 @@ export default function FaqPage(): React.JSX.Element {
               Коротко о форматах, приёме и заказе VITOM. Не нашли ответ — напишите нам
               в Telegram, отвечаем в течение дня.
             </p>
-            <a
-              href="https://t.me/vitom_uz"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-dark text-[12px] mt-8 px-7 py-3.5 rounded-full"
-            >
-              Написать в Telegram
-            </a>
+            {/* Desktop: CTA lives in the sticky intro column. */}
+            <div className="hidden lg:block">
+              <a
+                href="https://t.me/vitom_uz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-dark text-[12px] mt-8 px-7 py-3.5 rounded-full"
+              >
+                Написать в Telegram
+              </a>
+            </div>
           </div>
 
-          <FaqAccordion items={FAQ} />
+          <div>
+            <FaqAccordion items={FAQ} />
+
+            {/* Mobile: CTA sits under the questions, where it reads as the next step. */}
+            <div className="lg:hidden">
+              <a
+                href="https://t.me/vitom_uz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-dark w-full text-[12px] mt-10 px-7 py-4 rounded-full"
+              >
+                Написать в Telegram
+              </a>
+            </div>
+          </div>
         </Reveal>
       </div>
     </section>
