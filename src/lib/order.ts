@@ -12,15 +12,12 @@ const priceFormatter = new Intl.NumberFormat("ru-RU");
  * any cart — one item or many, shots, jelly, or a mix.
  */
 export function buildOrderDraft(items: CartItem[]): string {
-  const total = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
   const lines = items.map((i) => `• ${i.name} — ${i.quantity} шт.`);
 
   return [
     "Здравствуйте! Хочу оформить заказ в VITOM CLINIC:",
     "",
     ...lines,
-    "",
-    `Итого: ${priceFormatter.format(total)} сум`,
     "",
     "Подскажите, пожалуйста, по доставке и оплате.",
   ].join("\n");
