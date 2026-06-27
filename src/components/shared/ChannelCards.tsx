@@ -1,21 +1,34 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Send, Instagram, ShoppingBag, type LucideIcon } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-/** Icons are keyed by name so the card list stays serializable when passed
- *  from a Server Component page into this Client Component. */
-const ICONS: Record<string, LucideIcon> = {
-  telegram: Send,
-  instagram: Instagram,
-  uzum: ShoppingBag,
+/** Brand logos, keyed by name, so the card list stays serializable when passed
+ *  from a Server Component page. Mirrors the footer social treatment. */
+const LOGOS: Record<string, { img: string; wrap: string; imgClass: string }> = {
+  telegram: {
+    img: "/assets/telegram-6896827_1280.png",
+    wrap: "bg-[#29A9EB]",
+    imgClass: "object-cover scale-[1.18]",
+  },
+  instagram: {
+    img: "/assets/instagram-logo-colored.jpg",
+    wrap: "",
+    imgClass: "object-cover",
+  },
+  uzum: {
+    img: "/assets/uzum_logo.png",
+    wrap: "bg-[#FFE000]",
+    imgClass: "object-cover object-center scale-[1.18]",
+  },
 };
 
 export interface Channel {
-  icon: keyof typeof ICONS | string;
+  icon: keyof typeof LOGOS | string;
   eyebrow: string;
   title: string;
   description: string;
@@ -24,7 +37,7 @@ export interface Channel {
 
 function ChannelCard({ channel }: { channel: Channel }): React.JSX.Element {
   const [hovered, setHovered] = useState(false);
-  const Icon = ICONS[channel.icon] ?? Send;
+  const logo = LOGOS[channel.icon];
 
   return (
     <motion.a
@@ -40,8 +53,21 @@ function ChannelCard({ channel }: { channel: Channel }): React.JSX.Element {
       className="group relative flex flex-col gap-7 border border-line bg-paper/40 p-7 transition-colors duration-300 hover:bg-paper/80"
     >
       <div className="flex items-start justify-between">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-ink text-cream">
-          <Icon className="h-5 w-5" strokeWidth={1.5} />
+        <span
+          className={cn(
+            "relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full",
+            logo?.wrap,
+          )}
+        >
+          {logo && (
+            <Image
+              src={logo.img}
+              alt=""
+              width={48}
+              height={48}
+              className={cn("h-full w-full", logo.imgClass)}
+            />
+          )}
         </span>
         <motion.span
           aria-hidden="true"

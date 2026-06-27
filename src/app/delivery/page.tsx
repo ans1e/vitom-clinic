@@ -15,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 
 const UZUM_URL = "https://uzum.uz/shop/vitomclinic";
 const TELEGRAM_URL = "https://t.me/vitom_uz";
+const INSTAGRAM_URL = "https://www.instagram.com/vitom.clinic/";
 
 const STEPS = [
   {
@@ -58,22 +59,19 @@ export default function DeliveryPage(): React.JSX.Element {
           </p>
         </Reveal>
 
-        <Reveal className="mt-14 lg:mt-16 border-t border-line">
+        {/* Two steps per row so the section reads as a tidy 2×2 grid instead of
+            a tall list with empty space on the right. */}
+        <Reveal className="mt-14 lg:mt-16 grid sm:grid-cols-2 gap-px bg-line border border-line">
           {STEPS.map((step) => (
-            <div
-              key={step.n}
-              className="grid grid-cols-[auto_1fr] sm:grid-cols-[120px_1fr] gap-x-6 sm:gap-x-12 gap-y-3 border-b border-line py-9 lg:py-11"
-            >
-              <p className="display text-[28px] sm:text-[40px] text-ink/25 leading-none">{step.n}</p>
-              <div className="max-w-[560px]">
-                <h2 className="display text-[24px] sm:text-[30px] text-ink mb-3">{step.title}</h2>
-                <p className="text-[15px] leading-[1.75] text-smoke">{step.body}</p>
-              </div>
+            <div key={step.n} className="bg-cream p-8 lg:p-10">
+              <p className="display text-[36px] sm:text-[44px] text-ink/20 leading-none mb-4">{step.n}</p>
+              <h2 className="display text-[22px] sm:text-[26px] text-ink mb-3">{step.title}</h2>
+              <p className="text-[15px] leading-[1.75] text-smoke">{step.body}</p>
             </div>
           ))}
         </Reveal>
 
-        <Reveal className="mt-14 flex flex-col sm:flex-row gap-4">
+        <Reveal className="mt-14 flex flex-col sm:flex-row flex-wrap gap-4">
           <a
             href={UZUM_URL}
             target="_blank"
@@ -81,6 +79,14 @@ export default function DeliveryPage(): React.JSX.Element {
             className={cn(buttonVariants({ variant: "dark", size: "lg" }), "rounded-full")}
           >
             Открыть на Uzum Market
+          </a>
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ variant: "outline", size: "lg" }), "rounded-full")}
+          >
+            Заказать в Instagram
           </a>
           <a
             href={TELEGRAM_URL}

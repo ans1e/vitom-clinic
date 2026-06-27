@@ -57,14 +57,7 @@ export default function ContactsPage(): React.JSX.Element {
 
       <section className="bg-cream">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-20 lg:py-28">
-        <Reveal className="max-w-[760px]">
-          <p className="text-[17px] leading-[1.8] text-smoke max-w-[620px]">
-            Мы на связи каждый день и отвечаем в течение дня. Выберите удобный канал —
-            поможем с выбором формата и оформлением заказа.
-          </p>
-        </Reveal>
-
-        <Reveal className="mt-12 lg:mt-14">
+        <Reveal>
           <ChannelCards channels={CHANNELS} />
         </Reveal>
 

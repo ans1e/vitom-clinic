@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Minus, Plus, MessageCircle } from "lucide-react";
+import { Minus, Plus, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { getVariants } from "@/lib/variants";
@@ -25,6 +25,10 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
   const variant = variants[variantIndex];
   const gallery = product.gallery ?? [];
   const isProductView = photoIndex === 0;
+  // Total = the rendered product image plus every lifestyle photo.
+  const totalImages = gallery.length + 1;
+  const goPrev = (): void => setPhotoIndex((i) => (i - 1 + totalImages) % totalImages);
+  const goNext = (): void => setPhotoIndex((i) => (i + 1) % totalImages);
 
   const hasBig = product.format === "jelly" && !!product.bigImage;
   const showBig = hasBig && variantIndex >= 1;
@@ -48,8 +52,9 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
   return (
     <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start pb-28 lg:pb-0">
       {/* Image gallery — the rendered product (with the jelly volume cross-fade)
-          plus lifestyle photos, switched via the thumbnail strip. */}
+          plus lifestyle photos, switched via arrows or the thumbnail strip. */}
       <div className="mx-auto w-full max-w-[520px] lg:max-w-none">
+        <div className="relative">
         {isProductView ? (
           <div
             className={cn(
@@ -96,6 +101,28 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             />
           </div>
         )}
+
+        {totalImages > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={goPrev}
+              aria-label="Предыдущее фото"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center bg-cream/85 backdrop-blur border border-line text-ink shadow-[0_8px_20px_-10px_rgba(14,14,14,0.5)] transition-colors hover:bg-cream"
+            >
+              <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              aria-label="Следующее фото"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center bg-cream/85 backdrop-blur border border-line text-ink shadow-[0_8px_20px_-10px_rgba(14,14,14,0.5)] transition-colors hover:bg-cream"
+            >
+              <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
+            </button>
+          </>
+        )}
+        </div>
 
         {gallery.length > 0 && (
           <div className="flex gap-3 mt-3">
