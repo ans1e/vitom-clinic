@@ -49,10 +49,11 @@ export function PageHero({
           className="object-cover hidden sm:block"
         />
 
-        {/* Readability scrim: solid cream at the base, fading up. */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_top,#faf8f4_0%,#faf8f4_15%,rgba(250,248,244,0.62)_42%,rgba(250,248,244,0)_78%)]" />
-        {/* Gentle left wash so the title side stays calm on busy photos. */}
-        <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-cream/45 via-transparent to-transparent" />
+        {/* Same treatment as the homepage hero: a light directional wash that
+            lifts the title off the photo without washing the image out.
+            Mobile grounds the title at the bottom; desktop washes the left. */}
+        <div className="absolute inset-0 sm:hidden bg-gradient-to-t from-cream/90 via-cream/15 to-transparent" />
+        <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-cream/85 via-cream/30 to-transparent" />
 
         <div className="absolute inset-x-0 bottom-0">
           <div className="max-w-[1280px] mx-auto px-6 lg:px-10 pb-8 lg:pb-12">
