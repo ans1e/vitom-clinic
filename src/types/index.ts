@@ -24,5 +24,7 @@ export interface Product {
   bigImage?: string;
   bigImageWidth?: number;
   bigImageHeight?: number;
+  /** Additional lifestyle photos shown in the product gallery. */
+  gallery?: string[];
   badge?: ProductBadge;
 }

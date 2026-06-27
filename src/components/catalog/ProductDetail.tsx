@@ -18,9 +18,13 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
   const [variantIndex, setVariantIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  // 0 = the rendered product image; 1..n = lifestyle gallery photos.
+  const [photoIndex, setPhotoIndex] = useState(0);
   const addItem = useCartStore((state) => state.addItem);
 
   const variant = variants[variantIndex];
+  const gallery = product.gallery ?? [];
+  const isProductView = photoIndex === 0;
 
   const hasBig = product.format === "jelly" && !!product.bigImage;
   const showBig = hasBig && variantIndex >= 1;
@@ -43,51 +47,105 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
 
   return (
     <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start pb-28 lg:pb-0">
-      {/* Image — square so it always fits the viewport; both jelly jars are
-          mounted and cross-fade instantly. */}
-      <div
-        className={cn(
-          product.gradient,
-          "relative flex items-center justify-center overflow-hidden aspect-square lg:max-h-[560px] p-8 mx-auto w-full max-w-[520px] lg:max-w-none",
-        )}
-      >
-        <Image
-          src={product.image}
-          alt={product.imageAlt}
-          width={product.imageWidth}
-          height={product.imageHeight}
-          priority
-          sizes="(max-width: 1024px) 90vw, 600px"
-          className={cn(
-            "h-auto transition-opacity duration-300",
-            product.imageWidthClass,
-            showBig && "opacity-0",
-          )}
-        />
-        {hasBig && (
-          <Image
-            src={product.bigImage!}
-            alt={product.imageAlt}
-            width={product.bigImageWidth!}
-            height={product.bigImageHeight!}
-            priority
-            sizes="(max-width: 1024px) 90vw, 600px"
+      {/* Image gallery — the rendered product (with the jelly volume cross-fade)
+          plus lifestyle photos, switched via the thumbnail strip. */}
+      <div className="mx-auto w-full max-w-[520px] lg:max-w-none">
+        {isProductView ? (
+          <div
             className={cn(
-              "absolute left-1/2 top-1/2 w-[56%] h-auto -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300",
-              showBig ? "opacity-100" : "opacity-0",
+              product.gradient,
+              "relative flex items-center justify-center overflow-hidden aspect-square lg:max-h-[560px] p-8",
             )}
-          />
+          >
+            <Image
+              src={product.image}
+              alt={product.imageAlt}
+              width={product.imageWidth}
+              height={product.imageHeight}
+              priority
+              sizes="(max-width: 1024px) 90vw, 600px"
+              className={cn(
+                "h-auto transition-opacity duration-300",
+                product.imageWidthClass,
+                showBig && "opacity-0",
+              )}
+            />
+            {hasBig && (
+              <Image
+                src={product.bigImage!}
+                alt={product.imageAlt}
+                width={product.bigImageWidth!}
+                height={product.bigImageHeight!}
+                priority
+                sizes="(max-width: 1024px) 90vw, 600px"
+                className={cn(
+                  "absolute left-1/2 top-1/2 w-[56%] h-auto -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300",
+                  showBig ? "opacity-100" : "opacity-0",
+                )}
+              />
+            )}
+          </div>
+        ) : (
+          <div className="relative overflow-hidden aspect-square lg:max-h-[560px]">
+            <Image
+              src={gallery[photoIndex - 1]}
+              alt={`${product.name} — ${product.flavor}`}
+              fill
+              sizes="(max-width: 1024px) 90vw, 600px"
+              className="object-cover"
+            />
+          </div>
+        )}
+
+        {gallery.length > 0 && (
+          <div className="flex gap-3 mt-3">
+            <button
+              type="button"
+              onClick={() => setPhotoIndex(0)}
+              aria-label="Изображение товара"
+              aria-pressed={isProductView}
+              className={cn(
+                product.gradient,
+                "relative flex items-center justify-center shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-colors",
+                isProductView ? "border-ink" : "border-transparent hover:border-line",
+              )}
+            >
+              <Image
+                src={product.image}
+                alt=""
+                width={product.imageWidth}
+                height={product.imageHeight}
+                className={cn("h-auto w-[68%]")}
+              />
+            </button>
+            {gallery.map((photo, i) => (
+              <button
+                key={photo}
+                type="button"
+                onClick={() => setPhotoIndex(i + 1)}
+                aria-label={`Фото ${i + 2}`}
+                aria-pressed={photoIndex === i + 1}
+                className={cn(
+                  "relative shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-colors",
+                  photoIndex === i + 1 ? "border-ink" : "border-transparent hover:border-line",
+                )}
+              >
+                <Image src={photo} alt="" fill sizes="80px" className="object-cover" />
+              </button>
+            ))}
+          </div>
         )}
       </div>
 
       {/* Info */}
       <div className="lg:pt-4">
-        <p className="eyebrow text-[11px] text-smoke mb-4">
-          {product.category} / {product.flavor}
-        </p>
-        <h1 className="display text-[38px] sm:text-[52px] leading-[1.04] text-ink mb-5">
+        <p className="eyebrow text-[11px] text-smoke mb-4">{product.category}</p>
+        <h1 className="display text-[24px] sm:text-[34px] lg:text-[40px] leading-[1.1] text-ink mb-3">
           {product.name}
         </h1>
+        <p className="text-[15px] text-smoke mb-6">
+          Вкус: <span className="text-ink">{product.flavor}</span>
+        </p>
 
         <p className="wordmark text-[30px] tracking-[0.03em] text-ink mb-8">
           {formatPrice(variant.price, "")}
