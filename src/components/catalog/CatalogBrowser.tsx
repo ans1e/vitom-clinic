@@ -76,16 +76,18 @@ export function CatalogBrowser({ products }: { products: Product[] }): React.JSX
         })}
       </div>
 
-      {/* Oversized category word — crossfades when the filter changes. */}
+      {/* Oversized category word — quick crossfade when the filter changes.
+          Both words are absolutely centered so they overlap during the swap,
+          which reads as one fluid transition rather than a sequential one. */}
       <div className="relative flex items-center justify-center h-[68px] sm:h-[130px] lg:h-[180px] mb-8 lg:mb-12 overflow-hidden select-none">
-        <AnimatePresence mode="wait">
+        <AnimatePresence initial={false}>
           <motion.h2
             key={activeLabel}
-            initial={{ opacity: 0, y: 22, filter: "blur(10px)" }}
+            initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -22, filter: "blur(10px)" }}
-            transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
-            className="font-sans font-extrabold uppercase leading-none tracking-[-0.03em] text-ink text-[58px] sm:text-[112px] lg:text-[160px]"
+            exit={{ opacity: 0, y: -14, filter: "blur(4px)" }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 flex items-center justify-center font-sans font-extrabold uppercase leading-none tracking-[-0.03em] text-ink text-[58px] sm:text-[112px] lg:text-[160px]"
           >
             {activeLabel}
           </motion.h2>

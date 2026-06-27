@@ -46,15 +46,15 @@ export function PageHero({
           className="object-cover hidden sm:block"
         />
 
-        {/* Same treatment as the homepage hero: a light directional wash that
-            lifts the title off the photo without washing the image out.
-            Mobile grounds the title at the bottom; desktop washes the left. */}
-        <div className="absolute inset-0 sm:hidden bg-gradient-to-t from-cream/90 via-cream/15 to-transparent" />
+        {/* Mobile: a soft dark gradient at the very bottom sits the white title
+            in the photo's own text zone — no cream wash over the image.
+            Desktop: a light left wash like the homepage hero, with ink text. */}
+        <div className="absolute inset-0 sm:hidden bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
         <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-cream/85 via-cream/30 to-transparent" />
 
         <div className="absolute inset-x-0 bottom-0">
-          <div className="max-w-[1280px] mx-auto px-6 lg:px-10 pb-10 lg:pb-16">
-            <h1 className="display text-[44px] sm:text-[60px] lg:text-[76px] text-ink leading-[1.02]">
+          <div className="max-w-[1280px] mx-auto px-6 lg:px-10 pb-12 lg:pb-16">
+            <h1 className="display text-[44px] sm:text-[60px] lg:text-[76px] text-white sm:text-ink leading-[1.02]">
               {title}
             </h1>
             {children}
