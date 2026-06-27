@@ -38,7 +38,6 @@ export default function CertificatesPage(): React.JSX.Element {
   return (
     <>
       <PageHero
-        eyebrow="Quality & safety"
         title="Сертификаты"
         image="/assets/hero-certificates.webp"
         imageMobile="/assets/hero-certificates-m.webp"

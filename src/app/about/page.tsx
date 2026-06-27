@@ -21,7 +21,6 @@ export default function AboutPage(): React.JSX.Element {
   return (
     <>
       <PageHero
-        eyebrow="About VITOM"
         title="О бренде"
         image="/assets/hero-about.webp"
         imageMobile="/assets/hero-about-m.webp"

@@ -59,7 +59,6 @@ export default function FaqPage(): React.JSX.Element {
   return (
     <>
       <PageHero
-        eyebrow="Support"
         title="Вопросы и ответы"
         image="/assets/hero-faq.webp"
         imageMobile="/assets/hero-faq-m.webp"

@@ -19,7 +19,6 @@ export default async function CatalogPage(): Promise<React.JSX.Element> {
   return (
     <>
       <PageHero
-        eyebrow="Choose format"
         title="Каталог"
         image="/assets/hero-catalog.webp"
         imageMobile="/assets/hero-catalog-m.webp"

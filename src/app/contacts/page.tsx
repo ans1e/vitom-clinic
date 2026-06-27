@@ -49,7 +49,6 @@ export default function ContactsPage(): React.JSX.Element {
   return (
     <>
       <PageHero
-        eyebrow="Contacts"
         title="Контакты"
         image="/assets/hero-contacts.webp"
         imageMobile="/assets/hero-contacts-m.webp"

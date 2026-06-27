@@ -43,7 +43,6 @@ export default function WhereToBuyPage(): React.JSX.Element {
   return (
     <>
       <PageHero
-        eyebrow="Where to buy"
         title="Где купить"
         image="/assets/hero-wtb.webp"
         imageMobile="/assets/hero-wtb-m.webp"

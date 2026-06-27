@@ -3,7 +3,6 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface PageHeroProps {
-  eyebrow: string;
   title: string;
   image: string;
   imageMobile: string;
@@ -14,14 +13,12 @@ interface PageHeroProps {
 }
 
 /**
- * Full-width page banner: a product photo with the page title overlaid at the
- * bottom-left. A cream scrim keeps the title readable over both light and dark
- * photography — it is solid cream at the very bottom and fades up to reveal the
- * image, so dark ink text always sits on a legible base and the band blends
- * into the cream page below.
+ * Full-screen page banner: a product photo that fills the viewport below the
+ * header (like the homepage hero), with the page title overlaid at the
+ * bottom-left. A light directional wash — bottom on mobile, left on desktop —
+ * lifts the title off the photo without washing the image out.
  */
 export function PageHero({
-  eyebrow,
   title,
   image,
   imageMobile,
@@ -31,7 +28,7 @@ export function PageHero({
 }: PageHeroProps): React.JSX.Element {
   return (
     <section className={cn("relative isolate overflow-hidden bg-cream", className)}>
-      <div className="relative w-full h-[400px] sm:h-[440px] lg:h-[520px]">
+      <div className="relative w-full h-[calc(100svh_-_var(--header-h,79px))] min-h-[480px]">
         <Image
           src={imageMobile}
           alt={imageAlt}
@@ -56,9 +53,8 @@ export function PageHero({
         <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-cream/85 via-cream/30 to-transparent" />
 
         <div className="absolute inset-x-0 bottom-0">
-          <div className="max-w-[1280px] mx-auto px-6 lg:px-10 pb-8 lg:pb-12">
-            <p className="eyebrow text-[11px] text-smoke mb-3 lg:mb-4">{eyebrow}</p>
-            <h1 className="display text-[40px] sm:text-[56px] lg:text-[68px] text-ink leading-[1.02]">
+          <div className="max-w-[1280px] mx-auto px-6 lg:px-10 pb-10 lg:pb-16">
+            <h1 className="display text-[44px] sm:text-[60px] lg:text-[76px] text-ink leading-[1.02]">
               {title}
             </h1>
             {children}

@@ -43,7 +43,6 @@ export default function DeliveryPage(): React.JSX.Element {
   return (
     <>
       <PageHero
-        eyebrow="Delivery & payment"
         title="Доставка и оплата"
         image="/assets/hero-delivery.webp"
         imageMobile="/assets/hero-delivery-m.webp"
