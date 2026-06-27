@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { Reveal } from "@/components/shared/Reveal";
+import { PageHero } from "@/components/shared/PageHero";
 import { FaqAccordion, type FaqItem } from "@/components/shared/FaqAccordion";
 import { buildMetadata } from "@/lib/metadata";
 
@@ -56,24 +57,31 @@ const faqJsonLd = {
 
 export default function FaqPage(): React.JSX.Element {
   return (
-    <section className="bg-cream">
+    <>
+      <PageHero
+        eyebrow="Support"
+        title="Вопросы и ответы"
+        image="/assets/hero-faq.webp"
+        imageMobile="/assets/hero-faq-m.webp"
+        imageAlt="VITOM — натуральный морской коллаген"
+      />
+
+      <section className="bg-cream">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-20 lg:py-28">
         <Reveal className="grid lg:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-20 items-start">
-          <div className="lg:sticky lg:top-[calc(var(--header-h,79px)+2.5rem)]">
-            <p className="eyebrow text-[11px] text-smoke mb-6">Support</p>
-            <h1 className="display text-[44px] sm:text-[56px] text-ink mb-6">
-              Вопросы<br className="hidden sm:block" /> и ответы
-            </h1>
+          {/* Intro column — desktop only; on mobile the hero already carries the
+              title, so we go straight to the questions. */}
+          <div className="hidden lg:block lg:sticky lg:top-[calc(var(--header-h,79px)+2.5rem)]">
             <p className="text-[16px] leading-[1.8] text-smoke max-w-[420px]">
               Коротко о форматах, приёме и заказе VITOM. Не нашли ответ — напишите нам
               в Telegram, отвечаем в течение дня.
             </p>
             {/* Desktop: CTA lives in the sticky intro column. */}
-            <div className="hidden lg:block">
+            <div>
               <a
                 href="https://t.me/vitom_uz"
                 target="_blank"
@@ -102,6 +110,7 @@ export default function FaqPage(): React.JSX.Element {
           </div>
         </Reveal>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

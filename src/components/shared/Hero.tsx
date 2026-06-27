@@ -30,9 +30,10 @@ export function Hero(): React.JSX.Element {
       <div className="absolute inset-0 -z-10 hidden md:block bg-gradient-to-r from-cream/85 via-cream/35 to-transparent" />
 
       <div className="relative z-10 w-full max-w-[1280px] mx-auto px-6 lg:px-10 flex flex-col justify-end md:justify-center pt-12 md:pt-0 pb-10 md:pb-16">
-        <Reveal className="max-w-[460px] w-full">
-          <h1 className="hidden md:block display text-[42px] sm:text-[56px] lg:text-[64px] text-ink mb-9">
-            Морской коллаген для&nbsp;ежедневного ритуала
+        <Reveal className="max-w-[560px] w-full">
+          <h1 className="hidden md:block display text-[34px] sm:text-[42px] lg:text-[48px] leading-[1.12] text-ink mb-9">
+            <span className="block whitespace-nowrap">Морской коллаген</span>
+            <span className="block whitespace-nowrap">для ежедневного ритуала</span>
           </h1>
           <div className="flex flex-wrap items-center gap-4">
             <a href="#catalog" className={cn(buttonVariants({ variant: "dark", size: "md" }))}>

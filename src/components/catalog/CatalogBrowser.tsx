@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { useQueryState, parseAsStringLiteral } from "nuqs";
 
 import { ProductCard } from "@/components/catalog/ProductCard";
@@ -21,12 +22,13 @@ export function CatalogBrowser({ products }: { products: Product[] }): React.JSX
   );
 
   const visible = format ? products.filter((p) => p.format === format) : products;
+  const activeLabel = FILTERS.find((f) => f.value === format)?.label ?? "Все";
 
   return (
     <div>
       {/* Photographic category chips — round, with the label beneath. */}
       <div
-        className="flex items-start justify-center gap-7 sm:gap-12 mb-16"
+        className="flex items-start justify-center gap-7 sm:gap-12 mb-10 lg:mb-12"
         role="group"
         aria-label="Фильтр по формату"
       >
@@ -72,6 +74,22 @@ export function CatalogBrowser({ products }: { products: Product[] }): React.JSX
             </button>
           );
         })}
+      </div>
+
+      {/* Oversized category word — crossfades when the filter changes. */}
+      <div className="relative flex items-center justify-center h-[68px] sm:h-[130px] lg:h-[180px] mb-8 lg:mb-12 overflow-hidden select-none">
+        <AnimatePresence mode="wait">
+          <motion.h2
+            key={activeLabel}
+            initial={{ opacity: 0, y: 22, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -22, filter: "blur(10px)" }}
+            transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+            className="font-sans font-extrabold uppercase leading-none tracking-[-0.03em] text-ink text-[58px] sm:text-[112px] lg:text-[160px]"
+          >
+            {activeLabel}
+          </motion.h2>
+        </AnimatePresence>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">

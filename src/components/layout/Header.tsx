@@ -14,10 +14,10 @@ import { MenuHoverLink } from "@/components/ui/menu-hover-effects";
 const NAV = [
   { label: "О бренде", href: "/about" },
   { label: "Каталог", href: "/catalog" },
-  { label: "Доставка и оплата", href: "/#delivery" },
-  { label: "Где купить", href: "/#retail" },
-  { label: "Сертификаты", href: "/#trust" },
-  { label: "Контакты", href: "/#contacts" },
+  { label: "Доставка и оплата", href: "/delivery" },
+  { label: "Где купить", href: "/where-to-buy" },
+  { label: "Сертификаты", href: "/certificates" },
+  { label: "Контакты", href: "/contacts" },
 ] as const;
 
 export function Header(): React.JSX.Element {

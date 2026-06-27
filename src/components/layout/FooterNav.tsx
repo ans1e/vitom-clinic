@@ -9,11 +9,11 @@ import { motion } from "framer-motion";
 // underline wipe plus a small lift — transform/opacity only.
 const LINKS = [
   { label: "О нас", href: "/about" },
-  { label: "Доставка и оплата", href: "/#delivery" },
+  { label: "Доставка и оплата", href: "/delivery" },
   { label: "FAQ", href: "/faq" },
-  { label: "Контакты", href: "/#contacts" },
-  { label: "Где купить", href: "/#retail" },
-  { label: "Сертификаты", href: "/#trust" },
+  { label: "Контакты", href: "/contacts" },
+  { label: "Где купить", href: "/where-to-buy" },
+  { label: "Сертификаты", href: "/certificates" },
 ] as const;
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }): React.JSX.Element {
