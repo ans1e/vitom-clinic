@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { Minus, Plus, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -54,53 +55,65 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
       {/* Image gallery — the rendered product (with the jelly volume cross-fade)
           plus lifestyle photos, switched via arrows or the thumbnail strip. */}
       <div className="mx-auto w-full max-w-[520px] lg:max-w-none">
-        <div className="relative">
-        {isProductView ? (
-          <div
-            className={cn(
-              product.gradient,
-              "relative flex items-center justify-center overflow-hidden aspect-square lg:max-h-[560px] p-8",
-            )}
+        {/* Fixed-size stage so the crossfade never shifts the layout. */}
+        <div className="relative aspect-square lg:max-h-[560px]">
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={photoIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
+            className="absolute inset-0"
           >
-            <Image
-              src={product.image}
-              alt={product.imageAlt}
-              width={product.imageWidth}
-              height={product.imageHeight}
-              priority
-              sizes="(max-width: 1024px) 90vw, 600px"
-              className={cn(
-                "h-auto transition-opacity duration-300",
-                product.imageWidthClass,
-                showBig && "opacity-0",
-              )}
-            />
-            {hasBig && (
-              <Image
-                src={product.bigImage!}
-                alt={product.imageAlt}
-                width={product.bigImageWidth!}
-                height={product.bigImageHeight!}
-                priority
-                sizes="(max-width: 1024px) 90vw, 600px"
+            {isProductView ? (
+              <div
                 className={cn(
-                  "absolute left-1/2 top-1/2 w-[56%] h-auto -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300",
-                  showBig ? "opacity-100" : "opacity-0",
+                  product.gradient,
+                  "relative flex items-center justify-center overflow-hidden h-full w-full p-8",
                 )}
-              />
+              >
+                <Image
+                  src={product.image}
+                  alt={product.imageAlt}
+                  width={product.imageWidth}
+                  height={product.imageHeight}
+                  priority
+                  sizes="(max-width: 1024px) 90vw, 600px"
+                  className={cn(
+                    "h-auto transition-opacity duration-300",
+                    product.imageWidthClass,
+                    showBig && "opacity-0",
+                  )}
+                />
+                {hasBig && (
+                  <Image
+                    src={product.bigImage!}
+                    alt={product.imageAlt}
+                    width={product.bigImageWidth!}
+                    height={product.bigImageHeight!}
+                    priority
+                    sizes="(max-width: 1024px) 90vw, 600px"
+                    className={cn(
+                      "absolute left-1/2 top-1/2 w-[56%] h-auto -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300",
+                      showBig ? "opacity-100" : "opacity-0",
+                    )}
+                  />
+                )}
+              </div>
+            ) : (
+              <div className="relative overflow-hidden h-full w-full">
+                <Image
+                  src={gallery[photoIndex - 1]}
+                  alt={`${product.name} — ${product.flavor}`}
+                  fill
+                  sizes="(max-width: 1024px) 90vw, 600px"
+                  className="object-cover"
+                />
+              </div>
             )}
-          </div>
-        ) : (
-          <div className="relative overflow-hidden aspect-square lg:max-h-[560px]">
-            <Image
-              src={gallery[photoIndex - 1]}
-              alt={`${product.name} — ${product.flavor}`}
-              fill
-              sizes="(max-width: 1024px) 90vw, 600px"
-              className="object-cover"
-            />
-          </div>
-        )}
+          </motion.div>
+        </AnimatePresence>
 
         {totalImages > 1 && (
           <>

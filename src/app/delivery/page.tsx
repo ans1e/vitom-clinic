@@ -52,16 +52,9 @@ export default function DeliveryPage(): React.JSX.Element {
 
       <section className="bg-cream">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-20 lg:py-28">
-        <Reveal className="max-w-[760px]">
-          <p className="text-[17px] leading-[1.8] text-smoke max-w-[620px]">
-            Заказы VITOM проходят через Uzum Market — оплату и доставку берёт на себя
-            маркетплейс. Ниже — как оформить заказ за четыре простых шага.
-          </p>
-        </Reveal>
-
         {/* Two steps per row so the section reads as a tidy 2×2 grid instead of
             a tall list with empty space on the right. */}
-        <Reveal className="mt-14 lg:mt-16 grid sm:grid-cols-2 gap-px bg-line border border-line">
+        <Reveal className="grid sm:grid-cols-2 gap-px bg-line border border-line">
           {STEPS.map((step) => (
             <div key={step.n} className="bg-cream p-8 lg:p-10">
               <p className="display text-[36px] sm:text-[44px] text-ink/20 leading-none mb-4">{step.n}</p>
@@ -71,12 +64,12 @@ export default function DeliveryPage(): React.JSX.Element {
           ))}
         </Reveal>
 
-        <Reveal className="mt-14 flex flex-col sm:flex-row flex-wrap gap-4">
+        <Reveal className="mt-14 flex flex-col sm:flex-row flex-wrap gap-4 justify-center">
           <a
             href={UZUM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(buttonVariants({ variant: "dark", size: "lg" }), "rounded-full")}
+            className={cn(buttonVariants({ variant: "outline", size: "lg" }), "rounded-full")}
           >
             Открыть на Uzum Market
           </a>

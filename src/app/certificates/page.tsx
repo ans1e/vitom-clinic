@@ -46,15 +46,7 @@ export default function CertificatesPage(): React.JSX.Element {
 
       <section className="bg-cream">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-20 lg:py-28">
-        <Reveal className="max-w-[760px]">
-          <p className="text-[17px] leading-[1.8] text-smoke max-w-[620px]">
-            VITOM — это прозрачный состав и подтверждённое качество. Полный список
-            ингредиентов указан на упаковке каждого продукта, а документы мы готовы
-            предоставить по запросу.
-          </p>
-        </Reveal>
-
-        <Reveal className="mt-14 lg:mt-16 grid sm:grid-cols-2 gap-px bg-line border border-line">
+        <Reveal className="grid sm:grid-cols-2 gap-px bg-line border border-line">
           {POINTS.map((point) => (
             <div key={point.title} className="bg-cream p-8 lg:p-10">
               <h2 className="display text-[24px] sm:text-[26px] text-ink mb-3">{point.title}</h2>
