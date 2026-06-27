@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { HERO_BLUR } from "@/lib/hero-blur";
 import { cn } from "@/lib/utils";
 
 interface PageHeroProps {
@@ -34,6 +35,8 @@ export function PageHero({
           alt={imageAlt}
           fill
           priority
+          placeholder="blur"
+          blurDataURL={HERO_BLUR[imageMobile]}
           sizes="100vw"
           className="object-cover sm:hidden"
         />
@@ -42,19 +45,19 @@ export function PageHero({
           alt={imageAlt}
           fill
           priority
+          placeholder="blur"
+          blurDataURL={HERO_BLUR[image]}
           sizes="100vw"
           className="object-cover hidden sm:block"
         />
 
-        {/* Mobile: a soft dark gradient at the very bottom sits the white title
-            in the photo's own text zone — no cream wash over the image.
-            Desktop: a light left wash like the homepage hero, with ink text. */}
-        <div className="absolute inset-0 sm:hidden bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
-        <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-cream/85 via-cream/30 to-transparent" />
+        {/* No cream wash over the image — just a soft dark gradient at the very
+            bottom so the white title reads in the photo's own text zone. */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
 
         <div className="absolute inset-x-0 bottom-0">
           <div className="max-w-[1280px] mx-auto px-6 lg:px-10 pb-12 lg:pb-16">
-            <h1 className="display text-[44px] sm:text-[60px] lg:text-[76px] text-white sm:text-ink leading-[1.02]">
+            <h1 className="display text-[38px] sm:text-[52px] lg:text-[64px] text-white leading-[1.05]">
               {title}
             </h1>
             {children}
