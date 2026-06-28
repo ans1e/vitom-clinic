@@ -15,6 +15,7 @@ const ru = {
     whereToBuy: "Где купить",
     certificates: "Сертификаты",
     contacts: "Контакты",
+    faq: "Вопросы и ответы",
   },
   header: {
     search: "Поиск",
@@ -311,6 +312,7 @@ const uz: Dictionary = {
     whereToBuy: "Qayerdan sotib olish",
     certificates: "Sertifikatlar",
     contacts: "Kontaktlar",
+    faq: "Savol va javoblar",
   },
   header: {
     search: "Qidiruv",

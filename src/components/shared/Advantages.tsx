@@ -19,7 +19,7 @@ export function Advantages(): React.JSX.Element {
       <div className="max-w-[1340px] mx-auto px-6 lg:px-10 py-16 lg:py-24">
         <Reveal className="text-center mb-12 lg:mb-16">
           <p className="eyebrow text-[12px] text-smoke mb-6">{t.advantages.eyebrow}</p>
-          <h2 className="display text-[44px] sm:text-[56px] lg:text-[68px] text-ink">{t.advantages.title}</h2>
+          <h2 className="display text-[clamp(2rem,8vw,68px)] text-ink text-balance">{t.advantages.title}</h2>
         </Reveal>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-10 gap-y-12 max-w-[1200px] mx-auto">
           {ADVANTAGES.map((item) => (

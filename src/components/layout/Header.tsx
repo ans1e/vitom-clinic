@@ -23,6 +23,8 @@ export function Header(): React.JSX.Element {
     { label: t.nav.certificates, href: "/certificates" },
     { label: t.nav.contacts, href: "/contacts" },
   ];
+  // The burger menu adds FAQ, which the desktop top nav leaves to the footer.
+  const MOBILE_NAV = [...NAV, { label: t.nav.faq, href: "/faq" }];
   const count = useCartStore((state) => state.items.reduce((n, i) => n + i.quantity, 0));
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -51,15 +53,15 @@ export function Header(): React.JSX.Element {
     <>
       <header ref={headerRef} className="fixed top-0 inset-x-0 z-50 bg-cream/85 backdrop-blur-md border-b border-line">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
-        <div className="relative flex items-center justify-between md:justify-center h-[78px]">
+        <div className="relative flex items-center justify-between lg:justify-center h-[78px]">
           <Link
             href="/"
             className="wordmark text-[19px] sm:text-[26px] lg:text-[34px] text-ink select-none"
           >
             VITOM&nbsp;CLINIC
           </Link>
-          <div className="flex items-center gap-4 sm:gap-5 text-ink md:absolute md:right-0">
-            <LanguageSwitcher className="hidden md:inline-flex" />
+          <div className="flex items-center gap-4 sm:gap-5 text-ink lg:absolute lg:right-0">
+            <LanguageSwitcher className="hidden lg:inline-flex" />
             <button
               type="button"
               aria-label={t.header.search}
@@ -85,7 +87,7 @@ export function Header(): React.JSX.Element {
               type="button"
               aria-label={t.header.account}
               onClick={() => setAccountOpen(true)}
-              className="hidden md:inline-flex hover:opacity-60 transition-opacity"
+              className="hidden lg:inline-flex hover:opacity-60 transition-opacity"
             >
               <User className="w-[22px] h-[22px]" strokeWidth={1.5} />
             </button>
@@ -94,13 +96,13 @@ export function Header(): React.JSX.Element {
               aria-label={t.header.menu}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(true)}
-              className="md:hidden hover:opacity-60 transition-opacity"
+              className="lg:hidden hover:opacity-60 transition-opacity"
             >
               <Menu className="w-[24px] h-[24px]" strokeWidth={1.5} />
             </button>
           </div>
         </div>
-        <nav className="hidden md:flex items-center justify-center gap-5 lg:gap-7 pb-3 -mt-1 text-[14px]">
+        <nav className="hidden lg:flex items-center justify-center gap-5 lg:gap-7 pb-3 -mt-1 text-[14px]">
           {NAV.map((item) => (
             <MenuHoverLink key={item.label} href={item.href}>
               {item.label}
@@ -110,7 +112,7 @@ export function Header(): React.JSX.Element {
         </div>
       </header>
 
-      <MobileNav open={menuOpen} onClose={() => setMenuOpen(false)} items={NAV} />
+      <MobileNav open={menuOpen} onClose={() => setMenuOpen(false)} items={MOBILE_NAV} />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <AccountPopup open={accountOpen} onClose={() => setAccountOpen(false)} />
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />

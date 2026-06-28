@@ -44,7 +44,7 @@ export function CategoryBlock({
         </div>
 
         <div className="text-center max-w-[440px] mx-auto lg:mx-0 lg:pl-4">
-          <h2 className="display text-[34px] sm:text-[48px] leading-[1.05] text-ink mb-8">{title}</h2>
+          <h2 className="display text-[clamp(1.75rem,6vw,48px)] leading-[1.08] text-ink text-balance mb-8">{title}</h2>
           <Link href={ctaHref} className={cn(buttonVariants({ variant: "dark", size: "lg" }), "w-full")}>
             {ctaLabel}
           </Link>

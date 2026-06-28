@@ -57,7 +57,7 @@ export function PageHero({
 
         <div className="absolute inset-x-0 bottom-0">
           <div className="max-w-[1280px] mx-auto px-6 lg:px-10 pb-12 lg:pb-16">
-            <h1 className="display text-[38px] sm:text-[52px] lg:text-[64px] text-white leading-[1.05]">
+            <h1 className="display text-[clamp(2rem,7vw,64px)] text-white leading-[1.08] text-balance max-w-[18ch]">
               {title}
             </h1>
             {children}

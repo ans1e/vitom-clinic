@@ -91,7 +91,7 @@ export function CatalogBrowser({ products }: { products: Product[] }): React.JSX
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: -14, filter: "blur(4px)" }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0 flex items-center justify-center font-sans font-extrabold uppercase leading-none tracking-[-0.03em] text-ink text-[58px] sm:text-[112px] lg:text-[160px]"
+            className="absolute inset-0 flex items-center justify-center font-sans font-extrabold uppercase leading-none tracking-[-0.03em] text-ink text-[clamp(3rem,13vw,160px)]"
           >
             {activeLabel}
           </motion.h2>

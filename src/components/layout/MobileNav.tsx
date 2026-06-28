@@ -2,17 +2,12 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { X, Send, Instagram } from "lucide-react";
+import { X } from "lucide-react";
 
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { cn } from "@/lib/utils";
-
-const SOCIALS = [
-  { label: "Telegram", href: "https://t.me/vitom_uz", Icon: Send },
-  { label: "Instagram", href: "https://www.instagram.com/vitom.clinic/", Icon: Instagram },
-];
 
 interface NavItem {
   label: string;
@@ -44,7 +39,7 @@ export function MobileNav({ open, onClose, items }: MobileNavProps): React.JSX.E
       aria-modal="true"
       aria-label={t.header.menu}
       className={cn(
-        "fixed inset-0 z-[60] md:hidden",
+        "fixed inset-0 z-[60] lg:hidden",
         open ? "pointer-events-auto" : "pointer-events-none",
       )}
     >
@@ -81,35 +76,21 @@ export function MobileNav({ open, onClose, items }: MobileNavProps): React.JSX.E
           </button>
         </div>
 
-        <nav className="flex-1 flex flex-col items-center justify-center gap-7 px-6 -mt-6">
+        <nav className="flex-1 flex flex-col items-center justify-center gap-4 sm:gap-5 px-6 py-6 overflow-y-auto">
           {items.map((item) => (
             <Link
               key={item.label}
               href={item.href}
               onClick={onClose}
-              className="display text-[28px] text-ink hover:opacity-55 transition-opacity"
+              className="display text-[clamp(1.375rem,5.5vw,26px)] leading-[1.15] text-balance text-center text-ink hover:opacity-55 transition-opacity"
             >
               {item.label}
             </Link>
           ))}
         </nav>
 
-        {/* Socials + language toggle pinned to the bottom of the drawer. */}
-        <div className="shrink-0 px-6 pb-10 flex flex-col items-center gap-6">
-          <div className="flex items-center gap-3">
-            {SOCIALS.map(({ label, href, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center transition-transform duration-300 hover:-translate-y-1"
-              >
-                <Icon className="w-5 h-5" strokeWidth={1.5} />
-              </a>
-            ))}
-          </div>
+        {/* Language toggle pinned to the bottom of the drawer. */}
+        <div className="shrink-0 px-6 pb-10 flex flex-col items-center">
           <LanguageSwitcher className="scale-110" />
         </div>
       </div>
