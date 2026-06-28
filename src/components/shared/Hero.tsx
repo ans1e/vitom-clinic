@@ -44,11 +44,19 @@ export function Hero(): React.JSX.Element {
             <span className="block">{t.hero.line1}</span>
             <span className="block">{t.hero.line2}</span>
           </h1>
-          <div className="flex flex-wrap items-center gap-4">
-            <a href="#catalog" className={cn(buttonVariants({ variant: "dark", size: "md" }))}>
+          {/* nowrap + tighter mobile padding keeps both CTAs on one row even when
+              the Uzbek labels are wider than the Russian ones. */}
+          <div className="flex flex-nowrap items-center gap-3 sm:gap-4">
+            <a
+              href="#catalog"
+              className={cn(buttonVariants({ variant: "dark", size: "md" }), "px-6 sm:px-9")}
+            >
               {t.hero.ctaPrimary}
             </a>
-            <Link href="/about" className={cn(buttonVariants({ variant: "outline", size: "md" }))}>
+            <Link
+              href="/about"
+              className={cn(buttonVariants({ variant: "outline", size: "md" }), "px-6 sm:px-9")}
+            >
               {t.hero.ctaSecondary}
             </Link>
           </div>
