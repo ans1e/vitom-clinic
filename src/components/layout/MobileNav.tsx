@@ -64,8 +64,8 @@ export function MobileNav({ open, onClose, items }: MobileNavProps): React.JSX.E
           open ? "translate-x-0" : "translate-x-full",
         )}
       >
-        <div className="flex items-center justify-between h-[78px] px-6 border-b border-line">
-          <span className="wordmark text-[18px] text-ink select-none">VITOM&nbsp;CLINIC</span>
+        {/* Close button alone in the top-right corner. */}
+        <div className="flex items-center justify-end h-[64px] px-5 shrink-0">
           <button
             type="button"
             aria-label={t.common.close}
@@ -76,21 +76,27 @@ export function MobileNav({ open, onClose, items }: MobileNavProps): React.JSX.E
           </button>
         </div>
 
-        <nav className="flex-1 flex flex-col items-center justify-center gap-4 sm:gap-5 px-6 py-6 overflow-y-auto">
-          {items.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              onClick={onClose}
-              className="display text-[clamp(1.375rem,5.5vw,26px)] leading-[1.15] text-balance text-center text-ink hover:opacity-55 transition-opacity"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        {/* Brand title + nav, centered and top-aligned (Bonya-style). */}
+        <div className="flex-1 overflow-y-auto px-6 pb-6">
+          <p className="wordmark text-[17px] text-ink text-center select-none mb-10">
+            VITOM&nbsp;CLINIC
+          </p>
+          <nav className="flex flex-col items-center gap-7">
+            {items.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={onClose}
+                className="text-[15px] sm:text-[16px] font-semibold uppercase tracking-[0.09em] leading-[1.35] text-balance text-center text-ink hover:opacity-55 transition-opacity"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
 
         {/* Language toggle pinned to the bottom of the drawer. */}
-        <div className="shrink-0 px-6 pb-10 flex flex-col items-center">
+        <div className="shrink-0 px-6 pb-10 pt-4 flex justify-center">
           <LanguageSwitcher className="scale-110" />
         </div>
       </div>
