@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { localizeProduct } from "@/lib/i18n/helpers";
 import { cn, formatPrice } from "@/lib/utils";
 import type { Product } from "@/types";
 
@@ -16,7 +18,9 @@ interface ProductCardProps {
   priority?: boolean;
 }
 
-export function ProductCard({ product, variant = "grid", priority = false }: ProductCardProps): React.JSX.Element {
+export function ProductCard({ product: raw, variant = "grid", priority = false }: ProductCardProps): React.JSX.Element {
+  const { t, locale } = useLocale();
+  const product = localizeProduct(raw, t);
   const href = `/catalog/${product.slug}`;
 
   return (
@@ -52,9 +56,9 @@ export function ProductCard({ product, variant = "grid", priority = false }: Pro
         <h3 className="wordmark text-[19px] tracking-[0.06em] text-ink mb-5">{product.name}</h3>
       </Link>
       <div className="flex flex-col items-center gap-4 border-t border-line pt-5">
-        <span className="wordmark text-[15px] tracking-[0.04em] text-ink">{formatPrice(product.price)}</span>
+        <span className="wordmark text-[15px] tracking-[0.04em] text-ink">{formatPrice(product.price, locale, true)}</span>
         <Link href={href} className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
-          Подробнее
+          {t.product.more}
         </Link>
       </div>
     </motion.article>

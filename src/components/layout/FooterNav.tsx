@@ -4,17 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-// Single-row footer navigation. Каталог lives in the header, so it is omitted
-// here. Links sit in one row (bonya-style) with a refined hover: a spring
-// underline wipe plus a small lift — transform/opacity only.
-const LINKS = [
-  { label: "О нас", href: "/about" },
-  { label: "Доставка и оплата", href: "/delivery" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Контакты", href: "/contacts" },
-  { label: "Где купить", href: "/where-to-buy" },
-  { label: "Сертификаты", href: "/certificates" },
-] as const;
+import { useLocale } from "@/components/i18n/LocaleProvider";
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }): React.JSX.Element {
   const [hovered, setHovered] = useState(false);
@@ -45,10 +35,19 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
 }
 
 export function FooterNav(): React.JSX.Element {
+  const { t } = useLocale();
+  const links = [
+    { label: t.footer.about, href: "/about" },
+    { label: t.footer.delivery, href: "/delivery" },
+    { label: t.footer.faq, href: "/faq" },
+    { label: t.footer.contacts, href: "/contacts" },
+    { label: t.footer.whereToBuy, href: "/where-to-buy" },
+    { label: t.footer.certificates, href: "/certificates" },
+  ];
   return (
     <nav className="flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-10 lg:gap-x-14 gap-y-5">
-      {LINKS.map((link) => (
-        <FooterLink key={link.label} href={link.href}>
+      {links.map((link) => (
+        <FooterLink key={link.href} href={link.href}>
           {link.label}
         </FooterLink>
       ))}

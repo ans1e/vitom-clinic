@@ -2,10 +2,17 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { X } from "lucide-react";
+import { X, Send, Instagram } from "lucide-react";
 
 import { useScrollLock } from "@/hooks/useScrollLock";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { cn } from "@/lib/utils";
+
+const SOCIALS = [
+  { label: "Telegram", href: "https://t.me/vitom_uz", Icon: Send },
+  { label: "Instagram", href: "https://www.instagram.com/vitom.clinic/", Icon: Instagram },
+];
 
 interface NavItem {
   label: string;
@@ -19,6 +26,7 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ open, onClose, items }: MobileNavProps): React.JSX.Element {
+  const { t } = useLocale();
   useScrollLock(open);
 
   useEffect(() => {
@@ -34,7 +42,7 @@ export function MobileNav({ open, onClose, items }: MobileNavProps): React.JSX.E
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Меню"
+      aria-label={t.header.menu}
       className={cn(
         "fixed inset-0 z-[60] md:hidden",
         open ? "pointer-events-auto" : "pointer-events-none",
@@ -43,7 +51,7 @@ export function MobileNav({ open, onClose, items }: MobileNavProps): React.JSX.E
       {/* Backdrop */}
       <button
         type="button"
-        aria-label="Закрыть меню"
+        aria-label={t.common.close}
         tabIndex={open ? 0 : -1}
         onClick={onClose}
         className={cn(
@@ -65,7 +73,7 @@ export function MobileNav({ open, onClose, items }: MobileNavProps): React.JSX.E
           <span className="wordmark text-[18px] text-ink select-none">VITOM&nbsp;CLINIC</span>
           <button
             type="button"
-            aria-label="Закрыть меню"
+            aria-label={t.common.close}
             onClick={onClose}
             className="text-ink hover:opacity-60 transition-opacity"
           >
@@ -85,6 +93,25 @@ export function MobileNav({ open, onClose, items }: MobileNavProps): React.JSX.E
             </Link>
           ))}
         </nav>
+
+        {/* Socials + language toggle pinned to the bottom of the drawer. */}
+        <div className="shrink-0 px-6 pb-10 flex flex-col items-center gap-6">
+          <div className="flex items-center gap-3">
+            {SOCIALS.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center transition-transform duration-300 hover:-translate-y-1"
+              >
+                <Icon className="w-5 h-5" strokeWidth={1.5} />
+              </a>
+            ))}
+          </div>
+          <LanguageSwitcher className="scale-110" />
+        </div>
       </div>
     </div>
   );

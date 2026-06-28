@@ -1,21 +1,25 @@
+"use client";
+
 import Image from "next/image";
 
 import { Reveal } from "@/components/shared/Reveal";
-
-const ADVANTAGES = [
-  { icon: "/assets/skin.webp", size: 700, label: "Увлажнённая кожа" },
-  { icon: "/assets/hair.webp", size: 700, label: "Густые волосы" },
-  { icon: "/assets/nails.webp", size: 700, label: "Крепкие ногти" },
-  { icon: "/assets/sustavy-Picsart-BackgroundRemover.webp", size: 1024, label: "Подвижные суставы" },
-] as const;
+import { useLocale } from "@/components/i18n/LocaleProvider";
 
 export function Advantages(): React.JSX.Element {
+  const { t } = useLocale();
+  const ADVANTAGES = [
+    { icon: "/assets/skin.webp", size: 700, label: t.advantages.skin },
+    { icon: "/assets/hair.webp", size: 700, label: t.advantages.hair },
+    { icon: "/assets/nails.webp", size: 700, label: t.advantages.nails },
+    { icon: "/assets/sustavy-Picsart-BackgroundRemover.webp", size: 1024, label: t.advantages.joints },
+  ];
+
   return (
     <section className="bg-paper border-y border-line">
       <div className="max-w-[1340px] mx-auto px-6 lg:px-10 py-16 lg:py-24">
         <Reveal className="text-center mb-12 lg:mb-16">
-          <p className="eyebrow text-[12px] text-smoke mb-6">Daily effect</p>
-          <h2 className="display text-[44px] sm:text-[56px] lg:text-[68px] text-ink">Преимущества</h2>
+          <p className="eyebrow text-[12px] text-smoke mb-6">{t.advantages.eyebrow}</p>
+          <h2 className="display text-[44px] sm:text-[56px] lg:text-[68px] text-ink">{t.advantages.title}</h2>
         </Reveal>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-10 gap-y-12 max-w-[1200px] mx-auto">
           {ADVANTAGES.map((item) => (

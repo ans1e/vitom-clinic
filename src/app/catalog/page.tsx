@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { getProducts } from "@/lib/api";
 import { CatalogBrowser } from "@/components/catalog/CatalogBrowser";
 import { PageHero } from "@/components/shared/PageHero";
+import { getDictionary } from "@/lib/i18n/server";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
@@ -15,11 +16,12 @@ export const metadata: Metadata = buildMetadata({
 
 export default async function CatalogPage(): Promise<React.JSX.Element> {
   const products = await getProducts();
+  const t = await getDictionary();
 
   return (
     <>
       <PageHero
-        title="Каталог"
+        title={t.catalog.title}
         image="/assets/hero-catalog.webp"
         imageMobile="/assets/hero-catalog-m.webp"
         imageAlt="Каталог VITOM — шоты и желе"

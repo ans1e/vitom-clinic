@@ -5,24 +5,27 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useQueryState, parseAsStringLiteral } from "nuqs";
 
 import { ProductCard } from "@/components/catalog/ProductCard";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { cn } from "@/lib/utils";
 import type { Product, ProductFormat } from "@/types";
 
 /** Order and imagery mirror the in-store category chips: Все · Желе · Шоты. */
 const FILTERS = [
-  { value: null, label: "Все", image: "/assets/filter-all.webp" },
-  { value: "jelly", label: "Желе", image: "/assets/filter-jelly.webp" },
-  { value: "shots", label: "Шоты", image: "/assets/filter-shots.webp" },
+  { value: null, key: "all", image: "/assets/filter-all.webp" },
+  { value: "jelly", key: "jelly", image: "/assets/filter-jelly.webp" },
+  { value: "shots", key: "shots", image: "/assets/filter-shots.webp" },
 ] as const;
 
 export function CatalogBrowser({ products }: { products: Product[] }): React.JSX.Element {
+  const { t } = useLocale();
   const [format, setFormat] = useQueryState(
     "format",
     parseAsStringLiteral(["shots", "jelly"] as const),
   );
 
   const visible = format ? products.filter((p) => p.format === format) : products;
-  const activeLabel = FILTERS.find((f) => f.value === format)?.label ?? "Все";
+  const activeKey = FILTERS.find((f) => f.value === format)?.key ?? "all";
+  const activeLabel = t.catalog[activeKey];
 
   return (
     <div>
@@ -30,13 +33,14 @@ export function CatalogBrowser({ products }: { products: Product[] }): React.JSX
       <div
         className="flex items-start justify-center gap-7 sm:gap-12 mb-10 lg:mb-12"
         role="group"
-        aria-label="Фильтр по формату"
+        aria-label={t.catalog.filterGroup}
       >
         {FILTERS.map((filter) => {
           const active = format === filter.value;
+          const label = t.catalog[filter.key];
           return (
             <button
-              key={filter.label}
+              key={filter.key}
               type="button"
               aria-pressed={active}
               onClick={() => setFormat(filter.value as ProductFormat | null)}
@@ -54,7 +58,7 @@ export function CatalogBrowser({ products }: { products: Product[] }): React.JSX
               >
                 <Image
                   src={filter.image}
-                  alt={filter.label}
+                  alt={label}
                   fill
                   sizes="108px"
                   className={cn(
@@ -69,7 +73,7 @@ export function CatalogBrowser({ products }: { products: Product[] }): React.JSX
                   active ? "text-ink" : "text-smoke group-hover:text-ink",
                 )}
               >
-                {filter.label}
+                {label}
               </span>
             </button>
           );

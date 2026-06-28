@@ -5,12 +5,15 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
+import { useLocale } from "@/components/i18n/LocaleProvider";
+
 /**
  * Returns the visitor to wherever they came from (home, catalog, search…) using
  * the browser history. Falls back to the catalog when the page was opened
  * directly (shared link, new tab), where there is no in-app history to pop.
  */
 export function BackButton(): React.JSX.Element {
+  const { t } = useLocale();
   const router = useRouter();
   const [canGoBack, setCanGoBack] = useState(false);
 
@@ -25,7 +28,7 @@ export function BackButton(): React.JSX.Element {
   const content = (
     <>
       <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
-      Назад
+      {t.product.back}
     </>
   );
 

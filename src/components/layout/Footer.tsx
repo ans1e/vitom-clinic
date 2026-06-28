@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { FooterNav } from "@/components/layout/FooterNav";
 
 const SOCIALS = [
@@ -28,6 +31,7 @@ const SOCIALS = [
 ] as const;
 
 export function Footer(): React.JSX.Element {
+  const { t } = useLocale();
   return (
     <footer id="contacts" className="bg-ink text-white">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 pt-16 lg:pt-20 pb-10">
@@ -63,13 +67,13 @@ export function Footer(): React.JSX.Element {
         </div>
 
         <div className="border-t border-white/12 mt-14 pt-7 flex flex-col gap-4 sm:flex-row items-center justify-between">
-          <p className="text-[14px] text-white/55 order-1">© 2026 VITOM CLINIC</p>
+          <p className="text-[14px] text-white/55 order-1">{t.footer.rights}</p>
           <p className="text-[12px] text-white/35 order-3 sm:order-2">
-            Сайт разработан командой{" "}
+            {t.footer.madeBy}{" "}
             <span className="font-montserrat font-semibold tracking-[0.1em] text-white/55">ALTA</span>
           </p>
           <a href="#" className="text-[14px] text-white/55 hover:text-white transition-colors order-2 sm:order-3">
-            Политика конфиденциальности
+            {t.footer.policy}
           </a>
         </div>
       </div>

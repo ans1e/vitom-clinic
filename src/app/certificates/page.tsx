@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/shared/Reveal";
 import { PageHero } from "@/components/shared/PageHero";
 import { buttonVariants } from "@/components/ui/button";
+import { getDictionary } from "@/lib/i18n/server";
 import { buildMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 
@@ -15,30 +16,19 @@ export const metadata: Metadata = buildMetadata({
 
 const TELEGRAM_URL = "https://t.me/vitom_uz";
 
-const POINTS = [
-  {
-    title: "Сертификаты соответствия",
-    body: "Продукция сопровождается документами о соответствии — подтверждают качество и безопасность каждого формата.",
-  },
-  {
-    title: "Без сахара и подсластителей",
-    body: "В составе нет добавленного сахара и искусственных подсластителей — чистая формула без лишнего.",
-  },
-  {
-    title: "Без искусственных красителей",
-    body: "Вкус и цвет — за счёт натуральных компонентов. Никаких синтетических красителей.",
-  },
-  {
-    title: "Легкоусвояемый морской коллаген",
-    body: "В основе — морской коллаген с высокой биодоступностью: форма, которую организм усваивает легче.",
-  },
-];
+export default async function CertificatesPage(): Promise<React.JSX.Element> {
+  const t = await getDictionary();
+  const points = [
+    { title: t.certificates.point1Title, body: t.certificates.point1Body },
+    { title: t.certificates.point2Title, body: t.certificates.point2Body },
+    { title: t.certificates.point3Title, body: t.certificates.point3Body },
+    { title: t.certificates.point4Title, body: t.certificates.point4Body },
+  ];
 
-export default function CertificatesPage(): React.JSX.Element {
   return (
     <>
       <PageHero
-        title="Сертификаты"
+        title={t.certificates.title}
         image="/assets/hero-certificates.webp"
         imageMobile="/assets/hero-certificates-m.webp"
         imageAlt="VITOM — натуральный морской коллаген"
@@ -47,7 +37,7 @@ export default function CertificatesPage(): React.JSX.Element {
       <section className="bg-cream">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-20 lg:py-28">
         <Reveal className="grid sm:grid-cols-2 gap-px bg-line border border-line">
-          {POINTS.map((point) => (
+          {points.map((point) => (
             <div key={point.title} className="bg-cream p-8 lg:p-10">
               <h2 className="display text-[24px] sm:text-[26px] text-ink mb-3">{point.title}</h2>
               <p className="text-[15px] leading-[1.75] text-smoke">{point.body}</p>
@@ -57,8 +47,7 @@ export default function CertificatesPage(): React.JSX.Element {
 
         <Reveal className="mt-14 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-8">
           <p className="text-[15px] leading-[1.8] text-smoke max-w-[460px]">
-            Нужны конкретные документы или копии сертификатов? Напишите нам — пришлём
-            в ответ.
+            {t.certificates.note}
           </p>
           <a
             href={TELEGRAM_URL}
@@ -66,7 +55,7 @@ export default function CertificatesPage(): React.JSX.Element {
             rel="noopener noreferrer"
             className={cn(buttonVariants({ variant: "dark", size: "lg" }), "rounded-full shrink-0")}
           >
-            Запросить в Telegram
+            {t.certificates.cta}
           </a>
         </Reveal>
       </div>

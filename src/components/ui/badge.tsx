@@ -1,11 +1,8 @@
-import type { ProductBadge } from "@/types";
-import { cn } from "@/lib/utils";
+"use client";
 
-const LABELS: Record<ProductBadge, string> = {
-  new: "Новинка",
-  sale: "Скидка",
-  popular: "Хит",
-};
+import type { ProductBadge } from "@/types";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { cn } from "@/lib/utils";
 
 const STYLES: Record<ProductBadge, string> = {
   new: "bg-sage text-ink",
@@ -14,6 +11,7 @@ const STYLES: Record<ProductBadge, string> = {
 };
 
 export function Badge({ badge, className }: { badge: ProductBadge; className?: string }): React.JSX.Element {
+  const { t } = useLocale();
   return (
     <span
       className={cn(
@@ -22,7 +20,7 @@ export function Badge({ badge, className }: { badge: ProductBadge; className?: s
         className,
       )}
     >
-      {LABELS[badge]}
+      {t.badge[badge]}
     </span>
   );
 }

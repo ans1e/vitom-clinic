@@ -1,4 +1,6 @@
 import type { Product } from "@/types";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
+import { interpolate, localizeFlavor } from "@/lib/i18n/helpers";
 
 export interface ProductTab {
   id: string;
@@ -6,106 +8,24 @@ export interface ProductTab {
   items: string[];
 }
 
-/** One-to-two sentence intro shown under the title. */
-export function getShortDescription(product: Product): string {
-  return product.format === "shots"
-    ? `Порционный жидкий курс морского коллагена со вкусом «${product.flavor.toLowerCase()}» — готов к приёму без подготовки. Один шот в день для красоты кожи, волос и тонуса.`
-    : `Мягкий желейный формат курса на морском коллагене со вкусом «${product.flavor.toLowerCase()}» — удобная порция на каждый день, приятная текстура без приторности.`;
+/** One-to-two sentence intro shown under the title, in the active locale. */
+export function getShortDescription(product: Product, t: Dictionary): string {
+  const flavor = localizeFlavor(product.flavor, t).toLowerCase();
+  const template = product.format === "shots" ? t.product.shortDesc.shots : t.product.shortDesc.jelly;
+  return interpolate(template, { flavor });
 }
 
-/** Tabbed long-form content for the product page, by format. */
-export function getProductTabs(product: Product): ProductTab[] {
-  const flavor = product.flavor.toLowerCase();
-
-  if (product.format === "shots") {
-    return [
-      {
-        id: "specs",
-        label: "Характеристики",
-        items: [
-          "Морской коллаген с высокой биодоступностью",
-          "Порционный формат — готовый шот без смешивания",
-          "Без сахара и искусственных красителей",
-          "Курс рассчитан на ежедневный приём",
-          `Натуральный вкус «${flavor}»`,
-        ],
-      },
-      {
-        id: "usage",
-        label: "Рекомендация к применению",
-        items: [
-          "Принимайте 1 шот в день, лучше утром натощак",
-          "Встряхните перед употреблением",
-          "Проходите курс не менее месяца для заметного результата",
-          "Храните в прохладном тёмном месте",
-        ],
-      },
-      {
-        id: "composition",
-        label: "Состав",
-        items: [
-          "Гидролизат морского коллагена",
-          "Витамин C",
-          `Натуральный экстракт «${flavor}»`,
-          "Очищенная вода",
-        ],
-      },
-      {
-        id: "ingredients",
-        label: "Ингредиенты",
-        items: [
-          "Коллаген (рыбный гидролизат)",
-          "Аскорбиновая кислота (витамин C)",
-          "Натуральный ароматизатор",
-          "Регулятор кислотности",
-          "Консервант природного происхождения",
-        ],
-      },
-    ];
-  }
+/** Tabbed long-form content for the product page, by format and locale. */
+export function getProductTabs(product: Product, t: Dictionary): ProductTab[] {
+  const flavor = localizeFlavor(product.flavor, t).toLowerCase();
+  const src = product.format === "shots" ? t.tabs.shots : t.tabs.jelly;
+  const fill = (items: readonly string[]): string[] =>
+    items.map((item) => interpolate(item, { flavor }));
 
   return [
-    {
-      id: "specs",
-      label: "Характеристики",
-      items: [
-        "Морской коллаген в мягком желейном формате",
-        "Без сахара и искусственных красителей",
-        "Удобная ежедневная порция",
-        "Приятная текстура и натуральный вкус",
-        "Подходит для домашнего ритуала",
-      ],
-    },
-    {
-      id: "usage",
-      label: "Рекомендация к применению",
-      items: [
-        "Принимайте 1 порцию желе в день",
-        "Можно есть отдельно или добавлять в напитки",
-        "Проходите курс регулярно для лучшего результата",
-        "Храните в прохладном месте",
-      ],
-    },
-    {
-      id: "composition",
-      label: "Состав",
-      items: [
-        "Гидролизат морского коллагена",
-        "Желирующий агент растительного происхождения",
-        "Витамин C",
-        `Натуральный экстракт «${flavor}»`,
-      ],
-    },
-    {
-      id: "ingredients",
-      label: "Ингредиенты",
-      items: [
-        "Коллаген (рыбный гидролизат)",
-        "Пектин / агар",
-        "Аскорбиновая кислота (витамин C)",
-        "Натуральный ароматизатор",
-        "Регулятор кислотности",
-      ],
-    },
+    { id: "specs", label: t.tabs.specs, items: fill(src.specs) },
+    { id: "usage", label: t.tabs.usage, items: fill(src.usage) },
+    { id: "composition", label: t.tabs.composition, items: fill(src.composition) },
+    { id: "ingredients", label: t.tabs.ingredients, items: fill(src.ingredients) },
   ];
 }

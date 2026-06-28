@@ -5,22 +5,24 @@ import Link from "next/link";
 import { Menu, Search, ShoppingBag, User } from "lucide-react";
 
 import { useCartStore } from "@/store/cart";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { AccountPopup } from "@/components/layout/AccountPopup";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
 import { MenuHoverLink } from "@/components/ui/menu-hover-effects";
 
-const NAV = [
-  { label: "О бренде", href: "/about" },
-  { label: "Каталог", href: "/catalog" },
-  { label: "Доставка и оплата", href: "/delivery" },
-  { label: "Где купить", href: "/where-to-buy" },
-  { label: "Сертификаты", href: "/certificates" },
-  { label: "Контакты", href: "/contacts" },
-] as const;
-
 export function Header(): React.JSX.Element {
+  const { t } = useLocale();
+  const NAV = [
+    { label: t.nav.about, href: "/about" },
+    { label: t.nav.catalog, href: "/catalog" },
+    { label: t.nav.delivery, href: "/delivery" },
+    { label: t.nav.whereToBuy, href: "/where-to-buy" },
+    { label: t.nav.certificates, href: "/certificates" },
+    { label: t.nav.contacts, href: "/contacts" },
+  ];
   const count = useCartStore((state) => state.items.reduce((n, i) => n + i.quantity, 0));
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -57,9 +59,10 @@ export function Header(): React.JSX.Element {
             VITOM&nbsp;CLINIC
           </Link>
           <div className="flex items-center gap-4 sm:gap-5 text-ink md:absolute md:right-0">
+            <LanguageSwitcher className="hidden md:inline-flex" />
             <button
               type="button"
-              aria-label="Поиск"
+              aria-label={t.header.search}
               onClick={() => setSearchOpen(true)}
               className="hover:opacity-60 transition-opacity"
             >
@@ -67,7 +70,7 @@ export function Header(): React.JSX.Element {
             </button>
             <button
               type="button"
-              aria-label="Корзина"
+              aria-label={t.header.cart}
               onClick={() => setCartOpen(true)}
               className="relative hover:opacity-60 transition-opacity"
             >
@@ -80,7 +83,7 @@ export function Header(): React.JSX.Element {
             </button>
             <button
               type="button"
-              aria-label="Аккаунт"
+              aria-label={t.header.account}
               onClick={() => setAccountOpen(true)}
               className="hidden md:inline-flex hover:opacity-60 transition-opacity"
             >
@@ -88,7 +91,7 @@ export function Header(): React.JSX.Element {
             </button>
             <button
               type="button"
-              aria-label="Меню"
+              aria-label={t.header.menu}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(true)}
               className="md:hidden hover:opacity-60 transition-opacity"

@@ -8,6 +8,8 @@ import { Search, X } from "lucide-react";
 
 import { PRODUCTS } from "@/lib/products";
 import { useScrollLock } from "@/hooks/useScrollLock";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { localizeProduct, interpolate } from "@/lib/i18n/helpers";
 import { cn, formatPrice } from "@/lib/utils";
 import type { Product } from "@/types";
 
@@ -28,6 +30,7 @@ function matches(product: Product, q: string): boolean {
 }
 
 export function SearchOverlay({ open, onClose }: SearchOverlayProps): React.JSX.Element | null {
+  const { t, locale } = useLocale();
   const [mounted, setMounted] = useState(false);
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -53,7 +56,8 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps): React.JSX.
   }, [open, onClose]);
 
   const q = norm(query);
-  const results = useMemo(() => (q ? PRODUCTS.filter((p) => matches(p, q)) : []), [q]);
+  const products = useMemo(() => PRODUCTS.map((p) => localizeProduct(p, t)), [t]);
+  const results = useMemo(() => (q ? products.filter((p) => matches(p, q)) : []), [q, products]);
 
   if (!mounted || !open) return null;
 
@@ -61,12 +65,12 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps): React.JSX.
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Поиск по каталогу"
+      aria-label={t.search.dialogAria}
       className="fixed inset-0 z-[80] flex flex-col"
     >
       <button
         type="button"
-        aria-label="Закрыть поиск"
+        aria-label={t.search.closeAria}
         onClick={onClose}
         className="absolute inset-0 bg-cream/40 backdrop-blur-2xl"
       />
@@ -79,13 +83,13 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps): React.JSX.
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Название, вкус или категория…"
-            aria-label="Поисковый запрос"
+            placeholder={t.search.placeholder}
+            aria-label={t.search.queryAria}
             className="flex-1 bg-transparent text-[20px] sm:text-[26px] text-ink placeholder:text-smoke/70 outline-none [&::-webkit-search-cancel-button]:appearance-none"
           />
           <button
             type="button"
-            aria-label="Закрыть поиск"
+            aria-label={t.search.closeAria}
             onClick={onClose}
             className="w-10 h-10 rounded-full flex items-center justify-center text-ink hover:bg-ink/5 transition-colors"
           >
@@ -94,15 +98,11 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps): React.JSX.
         </div>
 
         <div className="mt-6 max-h-[52vh] overflow-y-auto scrollbar-hide">
-          {!q && (
-            <p className="text-[14px] text-smoke py-4">
-              Начните вводить — ищем по названию, вкусу и категории.
-            </p>
-          )}
+          {!q && <p className="text-[14px] text-smoke py-4">{t.search.hint}</p>}
 
           {q && results.length === 0 && (
             <p className="text-[15px] text-ink py-4">
-              По запросу «{query.trim()}» ничего не найдено.
+              {interpolate(t.search.nothing, { q: query.trim() })}
             </p>
           )}
 
@@ -138,7 +138,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps): React.JSX.
                     </span>
                   </span>
                   <span className="shrink-0 text-[13px] text-smoke group-hover:text-ink transition-colors">
-                    {formatPrice(product.price)}
+                    {formatPrice(product.price, locale, true)}
                   </span>
                 </Link>
               </li>

@@ -9,12 +9,16 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { getVariants } from "@/lib/variants";
 import { getShortDescription } from "@/lib/product-content";
 import { useCartStore } from "@/store/cart";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { localizeProduct, localizeVolume } from "@/lib/i18n/helpers";
 import { cn, formatPrice } from "@/lib/utils";
 import type { Product } from "@/types";
 
 const TELEGRAM_URL = "https://t.me/vitom_uz";
 
-export function ProductDetail({ product }: { product: Product }): React.JSX.Element {
+export function ProductDetail({ product: raw }: { product: Product }): React.JSX.Element {
+  const { t, locale } = useLocale();
+  const product = localizeProduct(raw, t);
   const variants = getVariants(product.format);
   const [variantIndex, setVariantIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -40,7 +44,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
       addItem({
         id: `${product.id}__${variant.label}`,
         slug: product.slug,
-        name: `${product.name} — ${product.flavor}, ${variant.label}`,
+        name: `${product.name} — ${product.flavor}, ${localizeVolume(variant.label, locale)}`,
         flavor: product.flavor,
         price: variant.price,
         image: activeImage,
@@ -120,7 +124,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             <button
               type="button"
               onClick={goPrev}
-              aria-label="Предыдущее фото"
+              aria-label={t.product.prevPhoto}
               className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center bg-cream/85 backdrop-blur border border-line text-ink shadow-[0_8px_20px_-10px_rgba(14,14,14,0.5)] transition-colors hover:bg-cream"
             >
               <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
@@ -128,7 +132,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             <button
               type="button"
               onClick={goNext}
-              aria-label="Следующее фото"
+              aria-label={t.product.nextPhoto}
               className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center bg-cream/85 backdrop-blur border border-line text-ink shadow-[0_8px_20px_-10px_rgba(14,14,14,0.5)] transition-colors hover:bg-cream"
             >
               <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
@@ -142,7 +146,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             <button
               type="button"
               onClick={() => setPhotoIndex(0)}
-              aria-label="Изображение товара"
+              aria-label={t.product.productImage}
               aria-pressed={isProductView}
               className={cn(
                 product.gradient,
@@ -163,7 +167,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
                 key={photo}
                 type="button"
                 onClick={() => setPhotoIndex(i + 1)}
-                aria-label={`Фото ${i + 2}`}
+                aria-label={`${t.product.photo} ${i + 2}`}
                 aria-pressed={photoIndex === i + 1}
                 className={cn(
                   "relative shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-colors",
@@ -184,15 +188,15 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
           {product.name}
         </h1>
         <p className="text-[15px] text-smoke mb-6">
-          Вкус: <span className="text-ink">{product.flavor}</span>
+          {t.product.flavorLabel}: <span className="text-ink">{product.flavor}</span>
         </p>
 
         <p className="wordmark text-[30px] tracking-[0.03em] text-ink mb-8">
-          {formatPrice(variant.price, "")}
+          {formatPrice(variant.price, locale)}
         </p>
 
-        <p className="eyebrow text-[10px] text-smoke mb-3">Объём</p>
-        <div className="flex flex-wrap gap-2.5 mb-9" role="group" aria-label="Объём">
+        <p className="eyebrow text-[10px] text-smoke mb-3">{t.product.volume}</p>
+        <div className="flex flex-wrap gap-2.5 mb-9" role="group" aria-label={t.product.volume}>
           {variants.map((v, i) => {
             const active = i === variantIndex;
             return (
@@ -208,7 +212,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
                     : "bg-transparent text-ink border-line hover:border-ink",
                 )}
               >
-                {v.label}
+                {localizeVolume(v.label, locale)}
               </button>
             );
           })}
@@ -221,7 +225,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
           <div className="flex items-center border border-line rounded-full">
             <button
               type="button"
-              aria-label="Уменьшить количество"
+              aria-label={t.product.decrease}
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
               className="w-12 h-12 flex items-center justify-center text-ink hover:bg-paper transition-colors rounded-l-full disabled:opacity-40"
               disabled={quantity <= 1}
@@ -233,7 +237,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             </span>
             <button
               type="button"
-              aria-label="Увеличить количество"
+              aria-label={t.product.increase}
               onClick={() => setQuantity((q) => q + 1)}
               className="w-12 h-12 flex items-center justify-center text-ink hover:bg-paper transition-colors rounded-r-full"
             >
@@ -249,7 +253,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             aria-live="polite"
             className="w-[168px] rounded-full"
           >
-            {added ? "Добавлено ✓" : "В корзину"}
+            {added ? t.product.added : t.product.addToCart}
           </Button>
 
           <a
@@ -258,13 +262,13 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             rel="noopener noreferrer"
             className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-[168px] rounded-full")}
           >
-            Написать
+            {t.product.write}
           </a>
         </div>
 
         {/* Description sits below the actions, as the last thing in the column. */}
         <p className="text-[15px] leading-[1.75] text-smoke max-w-[480px] mt-8 lg:mt-10 lg:pt-8 lg:border-t lg:border-line">
-          {getShortDescription(product)}
+          {getShortDescription(raw, t)}
         </p>
       </div>
 
@@ -275,7 +279,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
           <div className="flex items-center shrink-0 border border-line rounded-full">
             <button
               type="button"
-              aria-label="Уменьшить количество"
+              aria-label={t.product.decrease}
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
               className="w-10 h-11 flex items-center justify-center text-ink rounded-l-full disabled:opacity-40"
               disabled={quantity <= 1}
@@ -287,7 +291,7 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             </span>
             <button
               type="button"
-              aria-label="Увеличить количество"
+              aria-label={t.product.increase}
               onClick={() => setQuantity((q) => q + 1)}
               className="w-10 h-11 flex items-center justify-center text-ink rounded-r-full"
             >
@@ -303,14 +307,14 @@ export function ProductDetail({ product }: { product: Product }): React.JSX.Elem
             aria-live="polite"
             className="flex-1 min-w-0 px-3 rounded-full"
           >
-            {added ? "Добавлено ✓" : "В корзину"}
+            {added ? t.product.added : t.product.addToCart}
           </Button>
 
           <a
             href={TELEGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Написать в Telegram"
+            aria-label={t.product.writeTelegram}
             className={cn(
               buttonVariants({ variant: "outline", size: "icon" }),
               "shrink-0 w-11 h-11 rounded-full",

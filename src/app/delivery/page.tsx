@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/shared/Reveal";
 import { PageHero } from "@/components/shared/PageHero";
 import { buttonVariants } from "@/components/ui/button";
+import { getDictionary } from "@/lib/i18n/server";
 import { buildMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 
@@ -17,34 +18,19 @@ const UZUM_URL = "https://uzum.uz/shop/vitomclinic";
 const TELEGRAM_URL = "https://t.me/vitom_uz";
 const INSTAGRAM_URL = "https://www.instagram.com/vitom.clinic/";
 
-const STEPS = [
-  {
-    n: "01",
-    title: "Выбираете формат и объём",
-    body: "Шоты VITOSHOTS или желе, в нужном вкусе и на нужный курс — от месяца до длинного курса со скидкой за объём.",
-  },
-  {
-    n: "02",
-    title: "Оформляете заказ на Uzum Market",
-    body: "Переходите в наш магазин на Uzum, добавляете товар в корзину и подтверждаете заказ — каталог и наличие всегда актуальны.",
-  },
-  {
-    n: "03",
-    title: "Оплачиваете удобным способом",
-    body: "Картой онлайн или при получении. Оплата проходит на стороне Uzum Market — безопасно и без предоплаты наличными нам.",
-  },
-  {
-    n: "04",
-    title: "Получаете доставку по Узбекистану",
-    body: "Сроки, трекинг и пункты выдачи показывает маркетплейс. Доставка работает по всей стране.",
-  },
-];
+export default async function DeliveryPage(): Promise<React.JSX.Element> {
+  const t = await getDictionary();
+  const steps = [
+    { n: "01", title: t.delivery.step1Title, body: t.delivery.step1Body },
+    { n: "02", title: t.delivery.step2Title, body: t.delivery.step2Body },
+    { n: "03", title: t.delivery.step3Title, body: t.delivery.step3Body },
+    { n: "04", title: t.delivery.step4Title, body: t.delivery.step4Body },
+  ];
 
-export default function DeliveryPage(): React.JSX.Element {
   return (
     <>
       <PageHero
-        title="Доставка и оплата"
+        title={t.delivery.title}
         image="/assets/hero-delivery.webp"
         imageMobile="/assets/hero-delivery-m.webp"
         imageAlt="VITOM — натуральный морской коллаген"
@@ -55,7 +41,7 @@ export default function DeliveryPage(): React.JSX.Element {
         {/* Two steps per row so the section reads as a tidy 2×2 grid instead of
             a tall list with empty space on the right. */}
         <Reveal className="grid sm:grid-cols-2 gap-px bg-line border border-line">
-          {STEPS.map((step) => (
+          {steps.map((step) => (
             <div key={step.n} className="bg-cream p-8 lg:p-10">
               <p className="display text-[36px] sm:text-[44px] text-ink/20 leading-none mb-4">{step.n}</p>
               <h2 className="display text-[22px] sm:text-[26px] text-ink mb-3">{step.title}</h2>
@@ -71,7 +57,7 @@ export default function DeliveryPage(): React.JSX.Element {
             rel="noopener noreferrer"
             className={cn(buttonVariants({ variant: "outline", size: "lg" }), "rounded-full")}
           >
-            Открыть на Uzum Market
+            {t.delivery.ctaUzum}
           </a>
           <a
             href={INSTAGRAM_URL}
@@ -79,7 +65,7 @@ export default function DeliveryPage(): React.JSX.Element {
             rel="noopener noreferrer"
             className={cn(buttonVariants({ variant: "outline", size: "lg" }), "rounded-full")}
           >
-            Заказать в Instagram
+            {t.delivery.ctaInstagram}
           </a>
           <a
             href={TELEGRAM_URL}
@@ -87,7 +73,7 @@ export default function DeliveryPage(): React.JSX.Element {
             rel="noopener noreferrer"
             className={cn(buttonVariants({ variant: "outline", size: "lg" }), "rounded-full")}
           >
-            Задать вопрос в Telegram
+            {t.delivery.ctaTelegram}
           </a>
         </Reveal>
       </div>
