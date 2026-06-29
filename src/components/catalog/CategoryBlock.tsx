@@ -56,7 +56,7 @@ export function CategoryBlock({
         <div className="-mx-6 lg:mx-0 px-6 lg:px-0 overflow-x-auto scrollbar-hide lg:overflow-visible">
           <ul className="flex gap-6 lg:grid lg:grid-cols-3 lg:gap-8">
             {products.map((product, i) => (
-              <li key={product.id} className="shrink-0 w-[72%] sm:w-[46%] lg:w-auto">
+              <li key={product.id} className="shrink-0 w-[86%] sm:w-[60%] md:w-[46%] lg:w-auto">
                 <ProductCard product={product} variant="grid" priority={priority && i === 0} />
               </li>
             ))}

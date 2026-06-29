@@ -46,7 +46,7 @@ export function ProductCard({ product: raw, variant = "grid", priority = false }
             width={product.imageWidth}
             height={product.imageHeight}
             priority={priority}
-            sizes="(max-width: 640px) 80vw, 320px"
+            sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 320px"
             className={cn("card-img h-auto", product.imageWidthClass)}
           />
         </div>

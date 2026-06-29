@@ -55,7 +55,7 @@ export function ProductDetail({ product: raw }: { product: Product }): React.JSX
   };
 
   return (
-    <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start pb-28 lg:pb-0">
+    <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start lg:items-center pb-28 lg:pb-0">
       {/* Image gallery — the rendered product (with the jelly volume cross-fade)
           plus lifestyle photos, switched via arrows or the thumbnail strip. */}
       <div className="mx-auto w-full max-w-[520px] lg:max-w-none">
