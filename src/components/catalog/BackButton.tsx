@@ -24,7 +24,7 @@ export function BackButton(): React.JSX.Element {
   }, []);
 
   const className =
-    "inline-flex items-center gap-2 eyebrow text-[10px] text-smoke hover:text-ink transition-colors mb-9";
+    "inline-flex items-center gap-2 eyebrow text-[10px] text-smoke hover:text-ink transition-colors mb-5";
   const content = (
     <>
       <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />

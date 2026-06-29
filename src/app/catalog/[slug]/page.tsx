@@ -72,7 +72,7 @@ export default async function ProductPage({ params }: PageProps): Promise<React.
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-10 lg:py-16">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-5 lg:py-8">
         <BackButton />
 
         <ProductDetail product={raw} />
