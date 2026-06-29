@@ -44,18 +44,19 @@ export function Hero(): React.JSX.Element {
             <span className="block">{t.hero.line1}</span>
             <span className="block">{t.hero.line2}</span>
           </h1>
-          {/* nowrap + tighter mobile padding keeps both CTAs on one row even when
-              the Uzbek labels are wider than the Russian ones. */}
-          <div className="flex flex-nowrap items-center gap-3 sm:gap-4">
+          {/* On mobile both CTAs split the row evenly (flex-1) so they fill the
+              width, stay a comfortable size, and never shift between RU/UZ. On
+              desktop they size to their content. */}
+          <div className="flex items-center gap-3 sm:gap-4">
             <a
               href="#catalog"
-              className={cn(buttonVariants({ variant: "dark", size: "md" }), "px-6 sm:px-9")}
+              className={cn(buttonVariants({ variant: "dark", size: "md" }), "flex-1 sm:flex-none px-4 sm:px-9")}
             >
               {t.hero.ctaPrimary}
             </a>
             <Link
               href="/about"
-              className={cn(buttonVariants({ variant: "outline", size: "md" }), "px-6 sm:px-9")}
+              className={cn(buttonVariants({ variant: "outline", size: "md" }), "flex-1 sm:flex-none px-4 sm:px-9")}
             >
               {t.hero.ctaSecondary}
             </Link>
